@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hubert个人博客</title>
+  
+  <subtitle>个人博客</subtitle>
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2022-10-04T09:05:09.885Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>Hubert</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>diff算法实现</title>
+    <link href="http://example.com/2017/06/20/diff/"/>
+    <id>http://example.com/2017/06/20/diff/</id>
+    <published>2017-06-20T01:00:00.000Z</published>
+    <updated>2022-10-04T09:05:09.885Z</updated>
+    
+    <content type="html"><![CDATA[<p>diff算法实现</p><ol><li>为什么要用Diff算法</li></ol><p>由于在浏览器中操作DOM是很昂贵的，频繁的操作DOM，会产生一定的性能问题，这就是虚拟DOM的产生原因。虚拟DOM本质上是JavaScript对象，是对真实DOM的抽象状态变更时，记录新树与旧树的差异，最后把差异更新到真正的DOM中。</p><p>即使使用了Virtual DOM来进行真实DOM的渲染，在页面更新的时候，也不能全量地将整颗Virtual DOM进行渲染，而是去渲染改变的部分，这时候就需要一个计算Virtual DOM树改变部分的算法了，这个算法就是Diff算法。</p><p>diff算法的作用：用来修改DOM的一小段，不会引起dom树的重绘</p><ol start="2"><li>传统的Diff算法</li></ol><p>传统的Diff算法通过循环递归对节点进行比较，然后判断每个节点的状态以及要做的操作（add，remove，change），最后 根据Virtual DOM进行DOM的渲染。</p><p>传统Diff算法的复杂度为O(n^3)，这个复杂度相对来说还是较高的。后来React开发者提供了一种复杂度仅为O(n) 的Diff算法。</p><ol start="3"><li>更高效的Diff算法</li></ol><p>React的开发者结合Web界面的特点做出了两个大胆的假设，使得Diff算法复杂度直接从O(n^3)降低到O(n)，假设如下：</p><p>两个相同组件产生类似的DOM结构，不同的组件产生不同的DOM结构；对于同一层次的一组子节点，它们可以通过唯一的id进行区分。</p><p>基于以上这两点假设，使得虚拟DOM的Diff算法的复杂度从O(n^3)降到了O(n)</p><p><strong>同层比较</strong><br>新的Diff算法是逐层进行比较，只比较同一层次的节点，不会跨层次比较，大大降低了复杂度</p><p><strong>不同类型节点的比较</strong><br>如果发现新旧两个节点类型不同时，Diff算法会直接删除旧的节点及其子节点并插入新的节点，这是由于前面提出的不同组件产生的DOM结构一般是不同的，所以可以不用浪费时间去比较。注意的是，删除节点意味着彻底销毁该节点，并不会将该节点去与后面的节点相比较。</p><p><strong>相同类型节点的比较</strong><br>若是两个节点类型相同时，Diff算法会重新设置该节点的属性，从而实现节点的更新。</p><p><strong>列表节点的比较</strong><br>列表节点的操作一般包括添加、删除和排序，列表节点需要我们给它一个key才能进行高效的比较。</p><p>4.Vue Diff算法的实现</p><p>了解了Diff算法的大体思路后，我们回过头来看下Vue中的Diff算法是如何实现的。</p><p>Vue的Diff算法与上面的思路大体相似，只比较同级的节点，若找不到与新节点类型相同的节点，则插入一个新节点，若有相同类型的节点则进行节点属性的更新，最后删除新节点列表中不包含的旧节点。具体的实现在vue源码的src/core/vdom/patch.js中的updateChildren方法中，由于代码较长，下面简单说一下整个的比较流程。</p><p>如上图，有一组新旧节点数组before：[A, B, C, D]、after：[E, C, F, G]，我们设置了四个哨兵节点，oldStartIdx、newStartIdx、oldEndIdx、newEndIdx分别指向新旧节点数组的起始下标和开始下标，值为0,0,3,3；oldStartVnode，newStartVnode，oldEndVnode，newEndVnode则分别指向了before和after节点列表中对应哨兵节点下标的值，值为before[oldStartVnode],after[newStartIdx],before[oldEndIdx],after[newEndIdx]。</p><p><strong>Diff</strong><br>当哨兵满足oldStartIdx &lt;= oldEndIdx &amp;&amp; newStartIdx &lt;= newEndIdx的条件的时候，我们会循环进行一系列节点之间的比较。</p><p><strong>优先判断</strong><br>我们首先对上面声明的各个节点进行一些优先级较高的判断。</p><p>判断1：oldStartVnode是否为空，若为true则oldStartIdx向后移动，继续下一个节点的判断。判断代码如下：</p><p>判断2：oldEndVnode是否为空，若为true则oldEndIdx向前移动。判断代码如下：</p><p>判断3：使用 sameVnode判断before和after未判断的头节点是否为相同节点，若为true，则按照上面思路说的，对相同类型节点进行节点的属性的更新并修改哨兵位置。</p><p>判断4：使用上一步相同的方法对oldEndVnode和newEndVnode进行判断。并执行相同的更新操作。</p><p>判断5：使用sameVNode判断旧列表的头节点和新列表的尾节点进行判断，<br>sameVnode(oldStartVnode, newEndVnode)，若为true，更新相同节点，若该节点可以移动在真实DOM中将oldStartVnode，放到真实节点列表的最后。</p><p>判断6：使用sameVnode比较旧列表的尾节点和新列表的头节点，若为true，和上面一样，更新相同节点，将oldEndVnode放到真实节点列表的最开始。</p><p>通过这一系列的优先判断条件，一方面对于一些不需要做移动的DOM可以得到快速处理，另一方面使待处理节点变少，缩小了后续操作的处理范围，可以更快地完成同级节点的对比。</p><p>若节点不满足上面的所有判断，则会进入到最后一个条件分支，判断7：</p><p><strong>循环结束</strong><br>最后当oldStartIdx &gt; oldEndIdx || newStartIdx &gt; newEndIdx，也就是新或旧节点数组有一个被查找完之后则退出判断循环。当循环结束时，旧节点数组中剩下的节点即为要删除的节点，新节点数组中剩下的即为要新增的节点。只需要进行简单的新增和删除操作即可，代码如下：</p><p>经历过了这么多的判断之后，就完成了同级节点之间的Diff比较。</p><p><strong>就地复用</strong><br>在Diff中会使用到一种就地复用的策略。就地复用是指Vue会尽可能复用之前的DOM，尽可能不发生DOM的移动。</p><p>Vue判断新旧节点是否为相同节点（也就是上面的sameVnode方法），这个相同节点的意思并不是两个完全相同的节点，实际上它仅判断是否为同类节点（同类节点为类型相同且节点数据一致，如前后两个span，span标签上的属性没有改变，但是里面的内容变了，这样就算作同类节点），如果是同类节点，那么Vue会直接复用旧DOM节点，只要更新节点中的内容即可。这样可以大大减少列表中节点的移动操作。</p><p><strong>总结</strong><br>Vue中的Diff算法采用了React相似的思路，都是同层节点进行比较，在比较的过程中，使用了一些优先判断和就地复用策略，提高了Diff算法的效率。</p><p><strong>那么在面试工程中，可以怎么组织语言呢？</strong></p><p>答：diff算法的作用：用来修改DOM的一小段，不会引起dom树的重绘<br>diff算法的实现原理：diff算法将虚拟DOM的某个节点数据改变后生成新的的node节点与旧节点进行比较，并替换为新的节点，具体过程就是调用Patch方法，比较新旧节点，一边比较一边给真实DOM打补丁进行替换<br>简单来说，diff算法有以下过程<br>同级比较，再比较子节点<br>如果节点类型不同，直接干掉前面的节点，再创建并插入新节点，不会再比较这个节点以后的子节点。<br>（先判断一方有子节点一方 没有子节点的情况(如果新的children没有子节点，将旧的节点移除)）<br>比较都有子节点的情况(核心diff)<br>递归比较子节点<br>正常diff两个树的时间复杂度是O(n^3)， 但实际情况下我们很少会进行跨层级的移动DOM，所以vue将diff进行了优化，从O(n^3)–&gt;O(n)，只有当新旧children都为多个子节点时才需要用核心的diff算法进行同层级比较。<br>Vue2的核心diff算法采用了双端比较的算法，同时从新旧children的两端开始进行比较，借助Key值找到可复用的节点，再进行相关操作。<br>新旧children中的节点只有顺序是不同的时候，最佳的操作应该是通过移动元素的位置来达到更新的目的，需要在新旧children的节点中保存映射关系，以便能够在旧children的节点中找到可复用的节点。key也就是children中节点的唯一标识。<br>相比React的diff算法，同样情况下可以减少移动节点的次数，减少不必要的性能损耗，更加的优雅。<br>Vue3.x借鉴了ivi算法和inferno算法<br>在创建VNode时就确定其类型，以及在mount/patch的过程中采用位运算来判断一个VNode的类型，在这个基础之上再配合核心的Diff算法，使得性能上较Vue2.x有了提升(实际的实现可以结合Vue3.x的源码看)<br>该算法中还运用了动态规划的思想求解最长递归子序列</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;diff算法实现&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;为什么要用Diff算法&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;由于在浏览器中操作DOM是很昂贵的，频繁的操作DOM，会产生一定的性能问题，这就是虚拟DOM的产生原因。虚拟DOM本质上是JavaScript对象，是对真实DOM的抽象状态变更时</summary>
+      
+    
+    
+    
+    <category term="Vue" scheme="http://example.com/categories/Vue/"/>
+    
+    
+    <category term="Vue" scheme="http://example.com/tags/Vue/"/>
+    
+    <category term="React" scheme="http://example.com/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>谈谈你对盒子模型的理解</title>
+    <link href="http://example.com/2017/05/09/%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%90%86%E8%A7%A3/"/>
+    <id>http://example.com/2017/05/09/%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%90%86%E8%A7%A3/</id>
+    <published>2017-05-09T03:55:21.000Z</published>
+    <updated>2022-10-05T04:03:45.941Z</updated>
+    
+    <content type="html"><![CDATA[<p>一、是什么？<br>当对一个文档进行布局（layout）的时候，浏览器的渲染引擎会根据标准之一的 CSS 基础框盒模型（CSS basic box model），将所有元素表示为一个个矩形的盒子（box）<br>一个盒子由四个部分组成：content、padding、border、margin<br><img src="https://static.vue-js.com/976789a0-8f9b-11eb-85f6-6fac77c0c9b3.png" loading="lazy"><br>content，即实际内容，显示文本和图像<br>boreder，即边框，围绕元素内容的内边距的一条或多条线，由粗细、样式、颜色三部分组成<br>padding，即内边距，清除内容周围的区域，内边距是透明的，取值不能为负，受盒子的background属性影响<br>margin，即外边距，在元素外创建额外的空白，空白通常指不能放其他元素的区域<br>上述是一个从二维的角度观察盒子，下面再看看看三维图：</p><p><img src="https://static.vue-js.com/b2548b00-8f9b-11eb-ab90-d9ae814b240d.png" loading="lazy"><br>下面来段代码：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  .box &#123;</span><br><span class="line">    width: 200px;</span><br><span class="line">    height: 100px;</span><br><span class="line">    padding: 20px;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;div class=&quot;box&quot;&gt;</span><br><span class="line">  盒子模型</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure><p>当我们在浏览器查看元素时，却发现元素的大小变成了240px</p><p>这是因为，在CSS中，盒子模型可以分成：</p><p>W3C 标准盒子模型<br>IE 怪异盒子模型<br>默认情况下，盒子模型为W3C 标准盒子模型</p><p>#二、标准盒子模型<br>标准盒子模型，是浏览器默认的盒子模型</p><p>下面看看标准盒子模型的模型图：<br><img src="https://static.vue-js.com/c0e1d2e0-8f9b-11eb-85f6-6fac77c0c9b3.png" loading="lazy"></p><p>从上图可以看到：</p><p>盒子总宽度 = width + padding + border + margin;</p><p>盒子总高度 = height + padding + border + margin</p><p>也就是，width/height 只是内容高度，不包含 padding 和 border值</p><p>所以上面问题中，设置width为200px，但由于存在padding，但实际上盒子的宽度有240px</p><p>#三、IE 怪异盒子模型<br>同样看看IE 怪异盒子模型的模型图：<br><img src="https://static.vue-js.com/cfbb3ef0-8f9b-11eb-ab90-d9ae814b240d.png" loading="lazy"><br>从上图可以看到：</p><p>盒子总宽度 = width + margin;</p><p>盒子总高度 = height + margin;</p><p>也就是，width/height 包含了 padding和 border值</p><p>#Box-sizing<br>CSS 中的 box-sizing 属性定义了引擎应该如何计算一个元素的总宽度和总高度</p><p>语法：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">选择器具有优先级</span><br><span class="line">box-sizing: content-box|border-box|inherit:</span><br></pre></td></tr></table></figure><p>content-box 默认值，元素的 width/height 不包含padding，border，与标准盒子模型表现一致<br>border-box 元素的 width/height 包含 padding，border，与怪异盒子模型表现一致<br>inherit 指定 box-sizing 属性的值，应该从父元素继承<br>回到上面的例子里，设置盒子为 border-box 模型</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">选择器具有优先级</span><br><span class="line">&lt;style&gt;</span><br><span class="line">  .box &#123;</span><br><span class="line">    width: 200px;</span><br><span class="line">    height: 100px;</span><br><span class="line">    padding: 20px;</span><br><span class="line">    box-sizing: border-box;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;div class=&quot;box&quot;&gt;</span><br><span class="line">  盒子模型</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure><p>这时候，就可以发现盒子的所占据的宽度为200px</p><div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;"><iframe src="https://www.bilibili.com/video/BV1R4411d7BH/?spm_id_from=333.788.recommend_more_video.0&vd_source=5d6cc5bbdeda6999838ad14775716893&t=7.5" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"> </iframe></div>]]></content>
+    
+    
+    <summary type="html">简述盒子模型</summary>
+    
+    
+    
+    <category term="CSS" scheme="http://example.com/categories/CSS/"/>
+    
+    
+    <category term="CSS" scheme="http://example.com/tags/CSS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>css基础概念</title>
+    <link href="http://example.com/2017/05/08/css%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/"/>
+    <id>http://example.com/2017/05/08/css%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</id>
+    <published>2017-05-08T00:55:21.000Z</published>
+    <updated>2022-10-05T03:30:21.318Z</updated>
+    
+    <content type="html"><![CDATA[<p>一、css基础概念<br>1、描述<br>css叫做层叠样式表，或者级联样式表，用来控制网页的样式。</p><blockquote><p>说明：制作网页的三要素<br>1、html文档：做网页的布局（结构）————结构层<br>2、css：控制显示的样式（美观）————行为层<br>3、js：控制网页的行为（与用户交互）————交互层</p></blockquote><p>2、css的作用<br>使内容与表现完全分离<br>提高了代码的可重用性和可维护性，一个css文件可以被多个html引入，一个html文件可以引入多个css文件<br>3、引入css样式的方式<br>行内样式（内联样式）：<br>在标签内部使用 style属性进行设置，只对当前行生效，功能单一<br>内部样式：在head标签里，通过style标签引入，只对当前html文件生效<br>外部样式：在head标签里，通过link外部css文件的方式，方便多处使用，可重用、可维护性高<br>导入式：在head标签里的style里，通过@import的方式引入css文件</p><blockquote><p>说明：link和@import的区别<br>@import是先加载html文件再加载css，而link是同时加载hmtl和css文件<br>@import只能引入css文件，link可以引入多种文件，比如icon<br>@import具有兼容性，link没有兼容性<br>js只能操作link引入的样式，不能操作@import引入的样式</p></blockquote><p>二、css的特点<br>1、继承性<br>color、 text-开头的、line-开头的、font-开头的属性这些关于文字样式的，都可以被子代继承，所有关于盒子的、定位的、布局的属性都不能继承。</p><p>2、优先级</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">选择器具有优先级</span><br><span class="line">Id&gt;class&gt;元素&gt;通配符*（全局选择器）</span><br></pre></td></tr></table></figure><p>3、层叠性<br>CSS异常冲突处理能力—层叠性。</p><p>层叠性：就是css处理冲突的能力。 所有的权重计算，没有任何兼容问题！<br>CSS像艺术家一样优雅，像工程师一样严谨。</p><p>当选择器，选择上了某个元素的时候，那么要这么统计权重：</p><p>id的数量，类的数量，标签的数量，还有先后顺序，当优先级相同的情况下，写在后面的会覆盖前面的样式</p>]]></content>
+    
+    
+    <summary type="html">CSS基础概念详解</summary>
+    
+    
+    
+    <category term="CSS" scheme="http://example.com/categories/CSS/"/>
+    
+    
+    <category term="CSS" scheme="http://example.com/tags/CSS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HTML基础</title>
+    <link href="http://example.com/2017/05/05/HTML%E5%9F%BA%E7%A1%80/"/>
+    <id>http://example.com/2017/05/05/HTML%E5%9F%BA%E7%A1%80/</id>
+    <published>2017-05-05T00:55:21.000Z</published>
+    <updated>2022-10-05T03:22:47.602Z</updated>
+    
+    <content type="html"><![CDATA[<p>简释：一种为普通文件中某些字句加上标示的语言，其目的在于运用标记（tag）使文件达到预期的显示效果。<br>HTML 是在 SGML 定义下的一个描述性语言，或可说 HTML 是 SGML 的一个应用程式，HTML 不是程式语言，如 C++ 和 Java 之类，它只是标示语言，基本上你只要明白了各种 标记的用法便算学懂了 HTML，HTML 的格式非常简单，只是由文字及标记组合而成，于 编辑方面，任何文字编辑器都可以，只要能将文件另存成 ASCII 纯文字格式即可，当然 以专业的网页编辑软件为佳。<br>阅读须知：<br>这一篇HTML剖析偏重于标记的介绍，考虑到易懂及每节的篇幅问题，我并不按 W3C 的 HTML 分类，这可令你更易选择有兴趣的标记，其中只有文件标记是必读的，其 余可任意选择。这一篇不会提及任何网页编辑软件，只要掌握了 HTML ，任何网页 编辑工具都可以变成一把利器。<br>标记写法：<br>任何标记皆由”&lt;”及”&gt;”所围住，如</p><p>标记名与小于号之间不能留有空白字符。<br>某些标记　要加上参数，某些则不必。如 Hello<br>参数只可加于起始标记中。<br>在起始标记之标记名前加上符号”/“便是其终结标记，如<br>标记字母大小写皆可。</p><p>围堵标记与空标记：<br>标记按型态分为围堵标记与空标记<br>围堵标记<br>顾名思义，它以起始标记及终结标记将文字围住，令其达到预期显示效果。<br>例如 HTML Source ： Creation of Webpage is my favourite.<br>显示成： Creation of Webpage is my favourite.</p><p>其中 便称为围堵标记。<br>它以起始标记及终结标记标示文字 Creation of webpage ，令它显示成粗体，两者失其一都会发生错误显示。</p><p>空标记<br>是指标记单独出现，只有起始标记没有终结标记。<br>例如 HTML Source：<br>I love Creation of Webpage.<br>It’s a wonderful place.<br>显示成：<br>I love Creation of Webpage.<br>It’s a wonderful place.</p><p>其中换行标记<br>便属空标记。<br>它的作用便是将标记后所有东西显示于下一行，可见终结标记于它是没意义的， 但有些人会为空标记加上终结标记，这是为方便记认而己，对 HTML 没有影响。</p>]]></content>
+    
+    
+    <summary type="html">掌握基础页面布局</summary>
+    
+    
+    
+    <category term="HTML" scheme="http://example.com/categories/HTML/"/>
+    
+    
+    <category term="HTML" scheme="http://example.com/tags/HTML/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于</title>
+    <link href="http://example.com/2016/10/05/%E5%85%B3%E4%BA%8E/"/>
+    <id>http://example.com/2016/10/05/%E5%85%B3%E4%BA%8E/</id>
+    <published>2016-10-05T01:33:51.000Z</published>
+    <updated>2022-10-05T01:35:09.375Z</updated>
+    
+    <content type="html"><![CDATA[<p>我的学习经历和心路历程！</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;我的学习经历和心路历程！&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>
