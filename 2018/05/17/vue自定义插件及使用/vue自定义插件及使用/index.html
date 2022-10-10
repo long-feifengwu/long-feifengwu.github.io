@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="插件的自定义方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue自定义插件及使用">
+<meta property="og:url" content="http://example.com/2018/05/17/vue%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%8F%8A%E4%BD%BF%E7%94%A8/vue%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%8F%8A%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Hubert个人博客">
+<meta property="og:description" content="插件的自定义方式">
+<meta property="og:locale">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1744497/201908/1744497-20190805230239328-678884142.png">
+<meta property="article:published_time" content="2018-05-17T13:14:00.000Z">
+<meta property="article:modified_time" content="2022-10-07T02:28:42.782Z">
+<meta property="article:author" content="Hubert">
+<meta property="article:tag" content="vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/1744497/201908/1744497-20190805230239328-678884142.png">
+
+    <meta name="keywords" content="vue,插件,自定义">
+
+
+<title >vue自定义插件及使用</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=v1.1.8' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=v1.1.8' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+
+
+    
+
+    
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Hubert","root":"/","typed_text":["Web Developer","快来看看我的博客吧！"],"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)咦！又好了！","hideText":"(●—●)喔哟，崩溃啦！"},"theme_version":"v1.1.8","theme":{"switch":true,"default":"style-light"},"search":{"enable":false,"type":"engine","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。"},"creative_commons":{"license":"by-nc-sa","language":"deed.zh","post":false,"clipboard":false}};</script>
+
+<!-- Theme mode css -->
+
+    <link data-swup-theme="style-light" rel="stylesheet" href="/css/style-light.css?v=v1.1.8" id="trm-switch-style">
+    <link data-swup-theme="style-dark" rel="stylesheet" href="/css/style-dark.css?v=v1.1.8" id="trm-switch-style">
+    <script>
+        let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+        let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+        let themeMode = catchMode === 'style-dark' ? 'style-light' : 'style-dark';
+        let linkdom = document.querySelector('[data-swup-theme='+themeMode+']');
+        if(linkdom) linkdom.remove();
+    </script>
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Hubert个人博客" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" data-scroll-container style="opacity: 0">
+          <div data-scroll-section id="content" class="trm-scroll-section">
+
+            <div class="locomotive-scroll__sticky-target" style=" position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;"></div>
+
+            <!-- top bar -->
+            <header class="trm-top-bar" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+			<a href="/" class="trm-logo-frame trm-anima-link">
+				
+					<img src="/img/favicon.svg" alt="logo">
+				
+				
+					<div class="trm-logo-text">
+						前端历程！<span></span>
+					</div>
+				
+			</a>
+			<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+
+			<!-- menu -->
+			<div class="trm-menu">
+				<nav>
+					<ul>
+						
+						<li class="menu-item-has-children ">
+							<a  href="/" target="">
+								首页
+							</a>
+							
+						</li>
+						
+						<li class="menu-item-has-children ">
+							<a  href="/archives/" target="">
+								归档
+							</a>
+							
+						</li>
+						
+					</ul>
+				</nav>
+			</div>
+			<!-- menu end -->
+			
+			<!-- mode switcher place -->
+			
+			<div class="trm-mode-switcher-place">
+				<!-- <div class="trm-hidden-switcher"> -->
+					<div class="trm-mode-switcher">
+					  <i class="far fa-sun"></i>
+					  <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+					  <label class="trm-swich" for="trm-swich"></label>
+					  <i class="far fa-moon"></i>
+					</div>
+				  <!-- </div> -->
+			</div>
+			
+			<!-- mode switcher place end -->
+
+			 
+
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner" data-scroll data-scroll-direction="vertical">
+    
+    <!-- banner cover -->
+    <img src="/img/banner.png" alt="banner" class="trm-banner-cover" data-scroll data-scroll-direction="vertical" data-scroll-speed="-3">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container" data-scroll data-scroll-direction="vertical" data-scroll-speed="0">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            vue自定义插件及使用
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2018
+                                    </span
+                                ></li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <a href="#about-triger" data-scroll-to="#about-triger" data-scroll-offset="-130" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </a>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card" data-scroll data-scroll-repeat data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="60"> 
+    
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20"><img class="trm-avatar" src="/img/avatar.jpg" alt="Avatar"> </div>
+    <h5 class="trm-name trm-mb-15">
+        Hubert空间
+    </h5>
+    
+    <div class="trm-label">
+        嘿！你来了！
+        <span class="trm-typed-text">
+            <!-- Words for theme.user.typedText -->
+        </span>
+    </div>
+    
+</div>
+<!-- card header end -->
+
+<!-- sidebar social -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+
+<div class="trm-social">
+    
+        <a href="https://github.com" title="Github" rel="nofollow" target="_blank">
+            <i class="fab fa-github"></i>
+        </a>
+    
+        <a href="https://twitter.com" title="Twitter" rel="nofollow" target="_blank">
+            <i class="fab fa-twitter"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+
+<!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                前端开发:
+            </div>
+            <div class="trm-label trm-label-light">
+                VUE/REACT/HTML/CSS
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                城市:
+            </div>
+            <div class="trm-label trm-label-light">
+                上海
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                年限:
+            </div>
+            <div class="trm-label trm-label-light">
+                8
+            </div>
+        </li>
+    
+</ul>
+
+<!-- info end -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<!-- action button -->
+<div class="text-center">
+    <a href="mailto:13*****@163.com" class="trm-btn">
+        联系我
+        <i class="far fa-envelope"></i>
+    </a>
+</div>
+<!-- action button end -->
+
+    
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="col-lg-8">
+                <div class="trm-content" id="trm-content">
+                    <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
+
+                    <div class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-calendar-alt trm-icon"></i><br>
+            05/17
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-clock trm-icon"></i><br>
+            09:14
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-user trm-icon"></i><br>
+            Hubert空间
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article class="trm-publication">
+    <p>一、Vue插件有什么用</p>
+<p>插件通常会为 Vue 添加全局功能。<br>所谓全局：<br>即不需要像组件那样，每次使用他前都需要先引入一次。对于插件只要在最开始引入一次，在任何组件就可以直接使用。（类似于我们在window上添加的方法属性那样，任何地方都可以用）<br>插件能实现的功能没有限制，不过常见下面几种：</p>
+<p>通过插件，添加全局方法或者属性<br>通过插件，添加全局资源：指令/过滤器/过渡等<br>通过插件(使用全局 mixin 方法)，添加一些组件选项<br>通过插件,添加 Vue 实例方法，通过把它们添加到 Vue.prototype 上实现。<br>一个库，提供自己的 API，同时提供上面提到的一个或多个功能，如 vue-router</p>
+<p>二、插件原理<br>所谓vue插件其实就是一个简单的js对象而已，然后这个插件对象有一个公开属性 install ，他的值为一个函数，此函数接受两个参数。第一个参数是 Vue 构造器 , 第二个参数是一个可选的选项对象。<br><img src="https://img2018.cnblogs.com/blog/1744497/201908/1744497-20190805230239328-678884142.png" loading="lazy"><br>三、插件编写及举例<br> 1、编写插件<br> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">// install函数</span><br><span class="line"></span><br><span class="line">let Valid = &#123;&#125;</span><br><span class="line">Valid.install = function(Vue, options = &#123; triggEvent: &quot;input&quot; &#125;) &#123;</span><br><span class="line">    // static props 静态属性</span><br><span class="line">    // Vue.t1703C=&quot;hello everyone&quot;</span><br><span class="line">    // Vue.t1703C = &quot;1703C&quot;</span><br><span class="line">    // console.log(this) this指向vue  可一直往上查找,可查找到new Vue</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    // 所有需要验证的组成一个列表</span><br><span class="line">    let regList = [&#123;</span><br><span class="line">        &quot;type&quot;: &quot;phone&quot;,</span><br><span class="line">        &quot;RegExp&quot;: /^1[345679]d&#123;9&#125;$/,</span><br><span class="line">        &quot;msg&quot;: &quot;手机需要11位数字&quot;</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        &quot;type&quot;: &quot;pwd&quot;,</span><br><span class="line">        &quot;RegExp&quot;: /w&#123;6,9&#125;/</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        &quot;type&quot;: &quot;code&quot;,</span><br><span class="line">        &quot;RegExp&quot;: /d&#123;4&#125;/</span><br><span class="line">    &#125;]</span><br><span class="line"></span><br><span class="line">    Vue.directive(&quot;valid&quot;, &#123;</span><br><span class="line">        bind(el, binding) &#123;</span><br><span class="line">            // el:dom节点 binding:对象（可使用value）</span><br><span class="line">            // console.log(binding)</span><br><span class="line"></span><br><span class="line">            // 失去焦点事件</span><br><span class="line">            el.addEventListener(options.triggEvent, function(e) &#123;</span><br><span class="line">                // console.log(e.target.value)</span><br><span class="line"></span><br><span class="line">                // 找到符合条件的对象</span><br><span class="line">                let validObj = regList.find(item =&gt; item.type === binding.value)</span><br><span class="line">                if (validObj.RegExp.test(e.target.value)) &#123;</span><br><span class="line">                    console.log(&quot;验证通过&quot;)</span><br><span class="line">                    e.target.classList.remove(options.errorClass)</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    // let span = document.createElement(&quot;span&quot;);</span><br><span class="line">                    // span.innerText = validObj.msg</span><br><span class="line">                    // e.target.parentNode.appendChild(span)</span><br><span class="line">                    console.log(&quot;格式错误&quot;)</span><br><span class="line">                    e.target.classList.add(options.errorClass)</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">export default Valid</span><br></pre></td></tr></table></figure><br>2、使用：使用插件的时候，在main.js入口文件import引入，再使用use()方法使用即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &#x27;vue&#x27;</span><br><span class="line">import App from &#x27;./App.vue&#x27;</span><br><span class="line">import router from &#x27;./router&#x27;</span><br><span class="line">import store from &#x27;./store&#x27;</span><br><span class="line">import ElementUI from &#x27;element-ui&#x27;;</span><br><span class="line">import &#x27;element-ui/lib/theme-chalk/index.css&#x27;;</span><br><span class="line">//引入axios</span><br><span class="line">import $http from &quot;@/plugins/$http&quot;;</span><br><span class="line">//引入自定义插件插件  v-vaild</span><br><span class="line">import Valid from &quot;@/plugins/validator&quot;;</span><br><span class="line"></span><br><span class="line">Vue.config.productionTip = false</span><br><span class="line">Vue.use(ElementUI);</span><br><span class="line">//全局的axios</span><br><span class="line">Vue.use($http, &#123; timeout: 2000 &#125;);</span><br><span class="line">//自定义插件</span><br><span class="line">Vue.use(Valid, &#123;</span><br><span class="line">    triggEvent: &quot;blur&quot;, //triggEvent:事件  value值必须是字符串，</span><br><span class="line">    errorClass: &quot;vaild-error&quot; //errorClass：类名</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">    router,</span><br><span class="line">    store,</span><br><span class="line">    render: h =&gt; h(App)</span><br><span class="line">        // created() &#123;</span><br><span class="line">        //     console.log(this)</span><br><span class="line">        // &#125;,</span><br><span class="line">&#125;).$mount(&#x27;#app&#x27;)</span><br></pre></td></tr></table></figure>
+<p>3、在组件中访问</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class=&quot;login&quot;&gt; </span><br><span class="line">        &lt;header class=&quot;loginHeader&quot;&gt;登录/注册&lt;/header&gt;</span><br><span class="line">        &lt;main class=&quot;loginMain&quot;&gt;</span><br><span class="line">            &lt;div class=&quot;con&quot;&gt;</span><br><span class="line">　　　　　　　　　　//在这里使用了自定义插件v-vaild</span><br><span class="line">                &lt;input v-valid=&quot;&#x27;phone&#x27;&quot; placeholder=&quot;请输入姓名&quot; v-model=&quot;user&quot; class=&quot;user&quot;/&gt;</span><br><span class="line">                &lt;input v-valid=&quot;&#x27;pwd&#x27;&quot; placeholder=&quot;请输入密码&quot; v-model=&quot;password&quot; show-password class=&quot;pwd&quot;/&gt;</span><br><span class="line">                &lt;input v-valid=&quot;&#x27;code&#x27;&quot; placeholder=&quot;请输入验证码&quot; v-model=&quot;code&quot;  class=&quot;code&quot;/&gt;</span><br><span class="line">                &lt;span v-html=&quot;this.svg&quot; class=&quot;captch&quot; @click=&quot;upDataCaptch&quot;&gt;&lt;/span&gt;</span><br><span class="line">                &lt;el-button type=&quot;primary&quot; class=&quot;btn&quot; @click=&quot;handleLogin&quot;&gt;登录&lt;/el-button&gt;</span><br><span class="line">                &lt;router-link to=&quot;/register&quot;&gt;注册&lt;/router-link&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/main&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">    props:&#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    components:&#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    data()&#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            user:&quot;&quot;,</span><br><span class="line">            password:&quot;&quot;,</span><br><span class="line">            code:&quot;&quot;,</span><br><span class="line">            svg:&quot;&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed:&#123;</span><br><span class="line"></span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        handleLogin()&#123;</span><br><span class="line">            let data=&#123;username:this.user,password:this.password,captcha:this.code&#125;</span><br><span class="line">            this.$http.post(&quot;/api/buyer/user/login&quot;,data).then(res=&gt;&#123;</span><br><span class="line">                window.sessionStorage.setItem(&quot;token&quot;,res.token)</span><br><span class="line">                console.log(res)</span><br><span class="line">                if(res.code===1)&#123;</span><br><span class="line">                   this.$router.push(&quot;/list&quot;)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).finally(()=&gt;&#123;</span><br><span class="line">                // 登录失败再次调用</span><br><span class="line">                this.upDataCaptch()</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">        upDataCaptch()&#123;</span><br><span class="line">            // 每次点击都请求一次验证码</span><br><span class="line">             this.$http.get(&quot;/api/buyer/user/captcha&quot;).then(res=&gt;&#123;</span><br><span class="line">                console.log(res)</span><br><span class="line">                this.svg=res.data</span><br><span class="line">            &#125;)  </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    created()&#123;</span><br><span class="line">        // 初始化</span><br><span class="line">        this.upDataCaptch()</span><br><span class="line">    &#125;,</span><br><span class="line">    mounted()&#123;</span><br><span class="line">       </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;style  lang=&quot;scss&quot;&gt;</span><br><span class="line">*&#123;</span><br><span class="line">    padding: 0;</span><br><span class="line">    margin: 0;</span><br><span class="line">    list-style: none;</span><br><span class="line">&#125;</span><br><span class="line">html,body&#123;</span><br><span class="line">     100%;</span><br><span class="line">    height: 100%;</span><br><span class="line">    font-size: calc(100/750*100vw);</span><br><span class="line">&#125;</span><br><span class="line">.login&#123;</span><br><span class="line">     100%;</span><br><span class="line">    height: 100%;</span><br><span class="line">    font-size: calc(.16rem*2);</span><br><span class="line">    display: flex;</span><br><span class="line">    flex-direction: column;</span><br><span class="line">    background: #ebebec;</span><br><span class="line">&#125;</span><br><span class="line">.loginHeader&#123;</span><br><span class="line">     100%;</span><br><span class="line">    height: calc(.5rem*2);</span><br><span class="line">    display: flex;</span><br><span class="line">    justify-content: center;</span><br><span class="line">    align-items: center;</span><br><span class="line">&#125;</span><br><span class="line">.loginMain&#123;</span><br><span class="line">    flex: 1;</span><br><span class="line">    overflow: auto;</span><br><span class="line">&#125;</span><br><span class="line">.con&#123;</span><br><span class="line">     80%;</span><br><span class="line">    height: 80%;</span><br><span class="line">    margin: 0 auto;</span><br><span class="line">    input&#123;</span><br><span class="line">         100%;</span><br><span class="line">        height: calc(.3rem*2);</span><br><span class="line">    &#125;</span><br><span class="line">    .user&#123;</span><br><span class="line">        margin-top: 20px;</span><br><span class="line">    &#125;</span><br><span class="line">    .pwd&#123;</span><br><span class="line">        margin-top: 20px;</span><br><span class="line">    &#125;</span><br><span class="line">    .btn&#123;</span><br><span class="line">        100%;</span><br><span class="line">       height: 10%;</span><br><span class="line">       margin-top: 20px;</span><br><span class="line">    &#125;</span><br><span class="line">    .code&#123;</span><br><span class="line">        margin-top: 20px;</span><br><span class="line">         50%;</span><br><span class="line">    &#125;</span><br><span class="line">     .captch&#123;</span><br><span class="line">        margin-top: 20px;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+</article>
+    
+    
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-mb-40 trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2018/06/11/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/" class="trm-cover-frame trm-anima-link">
+            <img src="/img/block.jpg" alt="cover">
+        </a>
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/JavaScript/">
+                    JavaScript
+                </a>
+            </div>
+            <h5>
+                <a href="/2018/06/11/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/" class="trm-anima-link">
+                    说说var、let、const之间的区别
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>18/06/11</li>
+                <li>07:23</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2018/04/27/ajax%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/ajax%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/" class="trm-cover-frame trm-anima-link">
+            <img src="/img/block.jpg" alt="cover">
+        </a>
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/JavaScript/">
+                    JavaScript
+                </a>
+            </div>
+            <h5>
+                <a href="/2018/04/27/ajax%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/ajax%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/" class="trm-anima-link">
+                    ajax原理是什么
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>18/04/27</li>
+                <li>10:06</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+
+                    <div class="trm-divider trm-mb-40"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation" data-scroll data-scroll-offset="50">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v5.4.2
+            </span>
+            <span class="footer-separator"> | </span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                vv1.1.8
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+ 
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+          </div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+
+  </div>
+  <!-- app wrapper end -->
+
+  <div id="trm-back-top" class="trm-back-top">
+    <i class="fas fa-arrow-up"></i>
+</div>
+  
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="//cdn.jsdelivr.net/npm/swup@2.0.19/dist/swup.min.js"></script>
+
+    
+<script src="//cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+
+    
+<script src="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=v1.1.8"></script>
+    
+
+    
+
+    
+
+
+
+<!-- 评论插件 -->
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=v1.1.8"></script>
+
+</body>
+
+</html>

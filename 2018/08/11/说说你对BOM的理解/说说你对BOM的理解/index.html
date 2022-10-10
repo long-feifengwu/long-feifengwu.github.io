@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="BOM (Browser Object Model)，浏览器对象模型，提供了独立于内容与浏览器窗口进行交互的对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="说说你对BOM的理解">
+<meta property="og:url" content="http://example.com/2018/08/11/%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9BOM%E7%9A%84%E7%90%86%E8%A7%A3/%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9BOM%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Hubert个人博客">
+<meta property="og:description" content="BOM (Browser Object Model)，浏览器对象模型，提供了独立于内容与浏览器窗口进行交互的对象">
+<meta property="og:locale">
+<meta property="og:image" content="https://static.vue-js.com/482f33e0-8089-11eb-85f6-6fac77c0c9b3.png">
+<meta property="og:image" content="https://static.vue-js.com/6797ab40-8089-11eb-ab90-d9ae814b240d.png">
+<meta property="og:image" content="https://static.vue-js.com/7d6b21e0-8089-11eb-85f6-6fac77c0c9b3.png">
+<meta property="article:published_time" content="2018-08-11T12:19:00.000Z">
+<meta property="article:modified_time" content="2022-10-07T07:33:48.503Z">
+<meta property="article:author" content="Hubert">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.vue-js.com/482f33e0-8089-11eb-85f6-6fac77c0c9b3.png">
+
+    <meta name="keywords" content="JavaScript,HTML,XML,BOM">
+
+
+<title >说说你对BOM的理解</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=v1.1.8' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=v1.1.8' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+
+
+    
+
+    
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Hubert","root":"/","typed_text":["Web Developer","快来看看我的博客吧！"],"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)咦！又好了！","hideText":"(●—●)喔哟，崩溃啦！"},"theme_version":"v1.1.8","theme":{"switch":true,"default":"style-light"},"search":{"enable":false,"type":"engine","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。"},"creative_commons":{"license":"by-nc-sa","language":"deed.zh","post":false,"clipboard":false}};</script>
+
+<!-- Theme mode css -->
+
+    <link data-swup-theme="style-light" rel="stylesheet" href="/css/style-light.css?v=v1.1.8" id="trm-switch-style">
+    <link data-swup-theme="style-dark" rel="stylesheet" href="/css/style-dark.css?v=v1.1.8" id="trm-switch-style">
+    <script>
+        let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+        let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+        let themeMode = catchMode === 'style-dark' ? 'style-light' : 'style-dark';
+        let linkdom = document.querySelector('[data-swup-theme='+themeMode+']');
+        if(linkdom) linkdom.remove();
+    </script>
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Hubert个人博客" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" data-scroll-container style="opacity: 0">
+          <div data-scroll-section id="content" class="trm-scroll-section">
+
+            <div class="locomotive-scroll__sticky-target" style=" position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;"></div>
+
+            <!-- top bar -->
+            <header class="trm-top-bar" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+			<a href="/" class="trm-logo-frame trm-anima-link">
+				
+					<img src="/img/favicon.svg" alt="logo">
+				
+				
+					<div class="trm-logo-text">
+						前端历程！<span></span>
+					</div>
+				
+			</a>
+			<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+
+			<!-- menu -->
+			<div class="trm-menu">
+				<nav>
+					<ul>
+						
+						<li class="menu-item-has-children ">
+							<a  href="/" target="">
+								首页
+							</a>
+							
+						</li>
+						
+						<li class="menu-item-has-children ">
+							<a  href="/archives/" target="">
+								归档
+							</a>
+							
+						</li>
+						
+					</ul>
+				</nav>
+			</div>
+			<!-- menu end -->
+			
+			<!-- mode switcher place -->
+			
+			<div class="trm-mode-switcher-place">
+				<!-- <div class="trm-hidden-switcher"> -->
+					<div class="trm-mode-switcher">
+					  <i class="far fa-sun"></i>
+					  <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+					  <label class="trm-swich" for="trm-swich"></label>
+					  <i class="far fa-moon"></i>
+					</div>
+				  <!-- </div> -->
+			</div>
+			
+			<!-- mode switcher place end -->
+
+			 
+
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner" data-scroll data-scroll-direction="vertical">
+    
+    <!-- banner cover -->
+    <img src="/img/banner.png" alt="banner" class="trm-banner-cover" data-scroll data-scroll-direction="vertical" data-scroll-speed="-3">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container" data-scroll data-scroll-direction="vertical" data-scroll-speed="0">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            说说你对BOM的理解
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2018
+                                    </span
+                                ></li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <a href="#about-triger" data-scroll-to="#about-triger" data-scroll-offset="-130" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </a>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card" data-scroll data-scroll-repeat data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="60"> 
+    
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20"><img class="trm-avatar" src="/img/avatar.jpg" alt="Avatar"> </div>
+    <h5 class="trm-name trm-mb-15">
+        Hubert空间
+    </h5>
+    
+    <div class="trm-label">
+        嘿！你来了！
+        <span class="trm-typed-text">
+            <!-- Words for theme.user.typedText -->
+        </span>
+    </div>
+    
+</div>
+<!-- card header end -->
+
+<!-- sidebar social -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+
+<div class="trm-social">
+    
+        <a href="https://github.com" title="Github" rel="nofollow" target="_blank">
+            <i class="fab fa-github"></i>
+        </a>
+    
+        <a href="https://twitter.com" title="Twitter" rel="nofollow" target="_blank">
+            <i class="fab fa-twitter"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+
+<!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                前端开发:
+            </div>
+            <div class="trm-label trm-label-light">
+                VUE/REACT/HTML/CSS
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                城市:
+            </div>
+            <div class="trm-label trm-label-light">
+                上海
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                年限:
+            </div>
+            <div class="trm-label trm-label-light">
+                8
+            </div>
+        </li>
+    
+</ul>
+
+<!-- info end -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<!-- action button -->
+<div class="text-center">
+    <a href="mailto:13*****@163.com" class="trm-btn">
+        联系我
+        <i class="far fa-envelope"></i>
+    </a>
+</div>
+<!-- action button end -->
+
+    
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="col-lg-8">
+                <div class="trm-content" id="trm-content">
+                    <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
+
+                    <div class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-calendar-alt trm-icon"></i><br>
+            08/11
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-clock trm-icon"></i><br>
+            08:19
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-user trm-icon"></i><br>
+            Hubert空间
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article class="trm-publication">
+    <p>一、是什么<br>BOM (Browser Object Model)，浏览器对象模型，提供了独立于内容与浏览器窗口进行交互的对象</p>
+<p>其作用就是跟浏览器做一些交互效果,比如如何进行页面的后退，前进，刷新，浏览器的窗口发生变化，滚动条的滚动，以及获取客户的一些信息如：浏览器品牌版本，屏幕分辨率</p>
+<p>浏览器的全部内容可以看成DOM，整个浏览器可以看成BOM。区别如下：<br><img src="https://static.vue-js.com/482f33e0-8089-11eb-85f6-6fac77c0c9b3.png" loading="lazy"><br>二、window<br>Bom的核心对象是window，它表示浏览器的一个实例</p>
+<p>在浏览器中，window对象有双重角色，即是浏览器窗口的一个接口，又是全局对象</p>
+<p>因此所有在全局作用域中声明的变量、函数都会变成window对象的属性和方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var name = &#x27;js每日一题&#x27;;</span><br><span class="line">function lookName()&#123;</span><br><span class="line">  alert(this.name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(window.name);  //js每日一题</span><br><span class="line">lookName();                //js每日一题</span><br><span class="line">window.lookName();         //js每日一题</span><br></pre></td></tr></table></figure>
+<p>关于窗口控制方法如下：</p>
+<p>moveBy(x,y)：从当前位置水平移动窗体x个像素，垂直移动窗体y个像素，x为负数，将向左移动窗体，y为负数，将向上移动窗体<br>moveTo(x,y)：移动窗体左上角到相对于屏幕左上角的(x,y)点<br>resizeBy(w,h)：相对窗体当前的大小，宽度调整w个像素，高度调整h个像素。如果参数为负值，将缩小窗体，反之扩大窗体<br>resizeTo(w,h)：把窗体宽度调整为w个像素，高度调整为h个像素<br>scrollTo(x,y)：如果有滚动条，将横向滚动条移动到相对于窗体宽度为x个像素的位置，将纵向滚动条移动到相对于窗体高度为y个像素的位置<br>scrollBy(x,y)： 如果有滚动条，将横向滚动条向左移动x个像素，将纵向滚动条向下移动y个像素<br>window.open() 既可以导航到一个特定的url，也可以打开一个新的浏览器窗口</p>
+<p>如果 window.open() 传递了第二个参数，且该参数是已有窗口或者框架的名称，那么就会在目标窗口加载第一个参数指定的URL</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">window.open(&#x27;htttp://www.vue3js.cn&#x27;,&#x27;topFrame&#x27;)</span><br><span class="line">==&gt; &lt; a href=&quot; &quot; target=&quot;topFrame&quot;&gt;&lt;/ a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>window.open() 会返回新窗口的引用，也就是新窗口的 window 对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const myWin = window.open(&#x27;http://www.vue3js.cn&#x27;,&#x27;myWin&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>window.close() 仅用于通过 window.open() 打开的窗口</p>
+<p>新创建的 window 对象有一个 opener 属性，该属性指向打开他的原始窗口对象</p>
+<p>#三、location<br>url地址如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://foouser:barpassword@www.wrox.com:80/WileyCDA/?q=javascript#contents</span><br></pre></td></tr></table></figure>
+<p>location属性描述如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">属性名	例子	说明</span><br><span class="line">hash	&quot;#contents&quot;	utl中#后面的字符，没有则返回空串</span><br><span class="line">host	www.wrox.com:80	服务器名称和端口号</span><br><span class="line">hostname	www.wrox.com	域名，不带端口号</span><br><span class="line">href	http://www.wrox.com:80/WileyCDA/?q=javascript#contents	完整url</span><br><span class="line">pathname	&quot;/WileyCDA/&quot;	服务器下面的文件路径</span><br><span class="line">port	80	url的端口号，没有则为空</span><br><span class="line">protocol	http:	使用的协议</span><br><span class="line">search	?q=javascript	url的查询字符串，通常为？后面的内容</span><br></pre></td></tr></table></figure>
+<p>除了 hash之外，只要修改location的一个属性，就会导致页面重新加载新URL</p>
+<p>location.reload()，此方法可以重新刷新当前页面。这个方法会根据最有效的方式刷新页面，如果页面自上一次请求以来没有改变过，页面就会从浏览器缓存中重新加载</p>
+<p>如果要强制从服务器中重新加载，传递一个参数true即可</p>
+<p>#四、navigator<br>navigator 对象主要用来获取浏览器的属性，区分浏览器类型。属性较多，且兼容性比较复杂</p>
+<p>下表列出了navigator对象接口定义的属性和方法：<br><img src="https://static.vue-js.com/6797ab40-8089-11eb-ab90-d9ae814b240d.png" loading="lazy"><br>五、screen<br>保存的纯粹是客户端能力信息，也就是浏览器窗口外面的客户端显示器的信息，比如像素宽度和像素高度<br><img src="https://static.vue-js.com/7d6b21e0-8089-11eb-85f6-6fac77c0c9b3.png" loading="lazy"></p>
+<p>六、history<br>history对象主要用来操作浏览器URL的历史记录，可以通过参数向前，向后，或者向指定URL跳转</p>
+<p>常用的属性如下：</p>
+<p>history.go()<br>接收一个整数数字或者字符串参数：向最近的一个记录中包含指定字符串的页面跳转</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">history.go(&#x27;maixaofei.com&#x27;)</span><br></pre></td></tr></table></figure>
+<p>当参数为整数数字的时候，正数表示向前跳转指定的页面，负数为向后跳转指定的页面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">history.go(3) //向前跳转三个记录</span><br><span class="line">history.go(-1) //向后跳转一个记录</span><br></pre></td></tr></table></figure>
+<p>history.forward()：向前跳转一个页面<br>history.back()：向后跳转一个页面<br>history.length：获取历史记录数</p>
+
+</article>
+    
+    
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-mb-40 trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2018/07/16/DOM%E5%B8%B8%E8%A7%81%E7%9A%84%E6%93%8D%E4%BD%9C/DOM%E5%B8%B8%E8%A7%81%E7%9A%84%E6%93%8D%E4%BD%9C/" class="trm-cover-frame trm-anima-link">
+            <img src="https://static.vue-js.com/c100f450-7fdc-11eb-ab90-d9ae814b240d.png" alt="cover">
+        </a>
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/JavaScript/">
+                    JavaScript
+                </a>
+            </div>
+            <h5>
+                <a href="/2018/07/16/DOM%E5%B8%B8%E8%A7%81%E7%9A%84%E6%93%8D%E4%BD%9C/DOM%E5%B8%B8%E8%A7%81%E7%9A%84%E6%93%8D%E4%BD%9C/" class="trm-anima-link">
+                    DOM常见的操作
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>18/07/16</li>
+                <li>09:23</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+
+                    <div class="trm-divider trm-mb-40"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation" data-scroll data-scroll-offset="50">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v5.4.2
+            </span>
+            <span class="footer-separator"> | </span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                vv1.1.8
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+ 
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+          </div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+
+  </div>
+  <!-- app wrapper end -->
+
+  <div id="trm-back-top" class="trm-back-top">
+    <i class="fas fa-arrow-up"></i>
+</div>
+  
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="//cdn.jsdelivr.net/npm/swup@2.0.19/dist/swup.min.js"></script>
+
+    
+<script src="//cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+
+    
+<script src="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=v1.1.8"></script>
+    
+
+    
+
+    
+
+
+
+<!-- 评论插件 -->
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=v1.1.8"></script>
+
+</body>
+
+</html>

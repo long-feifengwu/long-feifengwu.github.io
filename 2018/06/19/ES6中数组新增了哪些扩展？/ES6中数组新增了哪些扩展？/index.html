@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="ES6中数组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6中数组新增了哪些扩展？">
+<meta property="og:url" content="http://example.com/2018/06/19/ES6%E4%B8%AD%E6%95%B0%E7%BB%84%E6%96%B0%E5%A2%9E%E4%BA%86%E5%93%AA%E4%BA%9B%E6%89%A9%E5%B1%95%EF%BC%9F/ES6%E4%B8%AD%E6%95%B0%E7%BB%84%E6%96%B0%E5%A2%9E%E4%BA%86%E5%93%AA%E4%BA%9B%E6%89%A9%E5%B1%95%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hubert个人博客">
+<meta property="og:description" content="ES6中数组">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-06-19T14:03:00.000Z">
+<meta property="article:modified_time" content="2022-10-07T07:08:08.367Z">
+<meta property="article:author" content="Hubert">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="JavaScript,ES6,数组">
+
+
+<title >ES6中数组新增了哪些扩展？</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=v1.1.8' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=v1.1.8' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+
+
+    
+
+    
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Hubert","root":"/","typed_text":["Web Developer","快来看看我的博客吧！"],"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)咦！又好了！","hideText":"(●—●)喔哟，崩溃啦！"},"theme_version":"v1.1.8","theme":{"switch":true,"default":"style-light"},"search":{"enable":false,"type":"engine","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。"},"creative_commons":{"license":"by-nc-sa","language":"deed.zh","post":false,"clipboard":false}};</script>
+
+<!-- Theme mode css -->
+
+    <link data-swup-theme="style-light" rel="stylesheet" href="/css/style-light.css?v=v1.1.8" id="trm-switch-style">
+    <link data-swup-theme="style-dark" rel="stylesheet" href="/css/style-dark.css?v=v1.1.8" id="trm-switch-style">
+    <script>
+        let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+        let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+        let themeMode = catchMode === 'style-dark' ? 'style-light' : 'style-dark';
+        let linkdom = document.querySelector('[data-swup-theme='+themeMode+']');
+        if(linkdom) linkdom.remove();
+    </script>
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Hubert个人博客" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" data-scroll-container style="opacity: 0">
+          <div data-scroll-section id="content" class="trm-scroll-section">
+
+            <div class="locomotive-scroll__sticky-target" style=" position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;"></div>
+
+            <!-- top bar -->
+            <header class="trm-top-bar" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+			<a href="/" class="trm-logo-frame trm-anima-link">
+				
+					<img src="/img/favicon.svg" alt="logo">
+				
+				
+					<div class="trm-logo-text">
+						前端历程！<span></span>
+					</div>
+				
+			</a>
+			<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+
+			<!-- menu -->
+			<div class="trm-menu">
+				<nav>
+					<ul>
+						
+						<li class="menu-item-has-children ">
+							<a  href="/" target="">
+								首页
+							</a>
+							
+						</li>
+						
+						<li class="menu-item-has-children ">
+							<a  href="/archives/" target="">
+								归档
+							</a>
+							
+						</li>
+						
+					</ul>
+				</nav>
+			</div>
+			<!-- menu end -->
+			
+			<!-- mode switcher place -->
+			
+			<div class="trm-mode-switcher-place">
+				<!-- <div class="trm-hidden-switcher"> -->
+					<div class="trm-mode-switcher">
+					  <i class="far fa-sun"></i>
+					  <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+					  <label class="trm-swich" for="trm-swich"></label>
+					  <i class="far fa-moon"></i>
+					</div>
+				  <!-- </div> -->
+			</div>
+			
+			<!-- mode switcher place end -->
+
+			 
+
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner" data-scroll data-scroll-direction="vertical">
+    
+    <!-- banner cover -->
+    <img src="/img/banner.png" alt="banner" class="trm-banner-cover" data-scroll data-scroll-direction="vertical" data-scroll-speed="-3">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container" data-scroll data-scroll-direction="vertical" data-scroll-speed="0">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            ES6中数组新增了哪些扩展？
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2018
+                                    </span
+                                ></li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <a href="#about-triger" data-scroll-to="#about-triger" data-scroll-offset="-130" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </a>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card" data-scroll data-scroll-repeat data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="60"> 
+    
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20"><img class="trm-avatar" src="/img/avatar.jpg" alt="Avatar"> </div>
+    <h5 class="trm-name trm-mb-15">
+        Hubert空间
+    </h5>
+    
+    <div class="trm-label">
+        嘿！你来了！
+        <span class="trm-typed-text">
+            <!-- Words for theme.user.typedText -->
+        </span>
+    </div>
+    
+</div>
+<!-- card header end -->
+
+<!-- sidebar social -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+
+<div class="trm-social">
+    
+        <a href="https://github.com" title="Github" rel="nofollow" target="_blank">
+            <i class="fab fa-github"></i>
+        </a>
+    
+        <a href="https://twitter.com" title="Twitter" rel="nofollow" target="_blank">
+            <i class="fab fa-twitter"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+
+<!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                前端开发:
+            </div>
+            <div class="trm-label trm-label-light">
+                VUE/REACT/HTML/CSS
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                城市:
+            </div>
+            <div class="trm-label trm-label-light">
+                上海
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                年限:
+            </div>
+            <div class="trm-label trm-label-light">
+                8
+            </div>
+        </li>
+    
+</ul>
+
+<!-- info end -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<!-- action button -->
+<div class="text-center">
+    <a href="mailto:13*****@163.com" class="trm-btn">
+        联系我
+        <i class="far fa-envelope"></i>
+    </a>
+</div>
+<!-- action button end -->
+
+    
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="col-lg-8">
+                <div class="trm-content" id="trm-content">
+                    <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
+
+                    <div class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-calendar-alt trm-icon"></i><br>
+            06/19
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-clock trm-icon"></i><br>
+            10:03
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-user trm-icon"></i><br>
+            Hubert空间
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article class="trm-publication">
+    <p>一、扩展运算符的应用<br>ES6通过扩展元素符…，好比 rest 参数的逆运算，将一个数组转为用逗号分隔的参数序列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">console.log(...[1, 2, 3])</span><br><span class="line">// 1 2 3</span><br><span class="line"></span><br><span class="line">console.log(1, ...[2, 3, 4], 5)</span><br><span class="line">// 1 2 3 4 5</span><br><span class="line"></span><br><span class="line">[...document.querySelectorAll(&#x27;div&#x27;)]</span><br><span class="line">// [&lt;div&gt;, &lt;div&gt;, &lt;div&gt;]</span><br></pre></td></tr></table></figure>
+<p>主要用于函数调用的时候，将一个数组变为参数序列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function push(array, ...items) &#123;</span><br><span class="line">  array.push(...items);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function add(x, y) &#123;</span><br><span class="line">  return x + y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const numbers = [4, 38];</span><br><span class="line">add(...numbers) // 42</span><br></pre></td></tr></table></figure>
+<p>可以将某些数据结构转为数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[...document.querySelectorAll(&#x27;div&#x27;)]</span><br></pre></td></tr></table></figure>
+<p>能够更简单实现数组复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const a1 = [1, 2];</span><br><span class="line">const [...a2] = a1;</span><br><span class="line">// [1,2]</span><br></pre></td></tr></table></figure>
+<p>数组的合并也更为简洁了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const arr1 = [&#x27;a&#x27;, &#x27;b&#x27;];</span><br><span class="line">const arr2 = [&#x27;c&#x27;];</span><br><span class="line">const arr3 = [&#x27;d&#x27;, &#x27;e&#x27;];</span><br><span class="line">[...arr1, ...arr2, ...arr3]</span><br><span class="line">// [ &#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;, &#x27;e&#x27; ]</span><br></pre></td></tr></table></figure>
+<p>注意：通过扩展运算符实现的是浅拷贝，修改了引用指向的值，会同步反映到新数组</p>
+<p>下面看个例子就清楚多了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const arr1 = [&#x27;a&#x27;, &#x27;b&#x27;,[1,2]];</span><br><span class="line">const arr2 = [&#x27;c&#x27;];</span><br><span class="line">const arr3  = [...arr1,...arr2]</span><br><span class="line">arr[1][0] = 9999 // 修改arr1里面数组成员值</span><br><span class="line">console.log(arr[3]) // 影响到arr3,[&#x27;a&#x27;,&#x27;b&#x27;,[9999,2],&#x27;c&#x27;]</span><br></pre></td></tr></table></figure>
+<p>扩展运算符可以与解构赋值结合起来，用于生成数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const [first, ...rest] = [1, 2, 3, 4, 5];</span><br><span class="line">first // 1</span><br><span class="line">rest  // [2, 3, 4, 5]</span><br><span class="line"></span><br><span class="line">const [first, ...rest] = [];</span><br><span class="line">first // undefined</span><br><span class="line">rest  // []</span><br><span class="line"></span><br><span class="line">const [first, ...rest] = [&quot;foo&quot;];</span><br><span class="line">first  // &quot;foo&quot;</span><br><span class="line">rest   // []</span><br></pre></td></tr></table></figure>
+<p>如果将扩展运算符用于数组赋值，只能放在参数的最后一位，否则会报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const [...butLast, last] = [1, 2, 3, 4, 5];</span><br><span class="line">// 报错</span><br><span class="line"></span><br><span class="line">const [first, ...middle, last] = [1, 2, 3, 4, 5];</span><br><span class="line">// 报错</span><br></pre></td></tr></table></figure>
+<p>可以将字符串转为真正的数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[...&#x27;hello&#x27;]</span><br><span class="line">// [ &quot;h&quot;, &quot;e&quot;, &quot;l&quot;, &quot;l&quot;, &quot;o&quot; ]</span><br></pre></td></tr></table></figure>
+<p>定义了遍历器（Iterator）接口的对象，都可以用扩展运算符转为真正的数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let nodeList = document.querySelectorAll(&#x27;div&#x27;);</span><br><span class="line">let array = [...nodeList];</span><br><span class="line"></span><br><span class="line">let map = new Map([</span><br><span class="line">  [1, &#x27;one&#x27;],</span><br><span class="line">  [2, &#x27;two&#x27;],</span><br><span class="line">  [3, &#x27;three&#x27;],</span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">let arr = [...map.keys()]; // [1, 2, 3]</span><br></pre></td></tr></table></figure>
+<p>如果对没有 Iterator 接口的对象，使用扩展运算符，将会报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const obj = &#123;a: 1, b: 2&#125;;</span><br><span class="line">let arr = [...obj]; // TypeError: Cannot spread non-iterable object</span><br></pre></td></tr></table></figure>
+<p>#二、构造函数新增的方法<br>关于构造函数，数组新增的方法有如下：</p>
+<p>Array.from()<br>Array.of()<br>#Array.from()<br>将两类对象转为真正的数组：类似数组的对象和可遍历（iterable）的对象（包括 ES6 新增的数据结构 Set 和 Map）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let arrayLike = &#123;</span><br><span class="line">    &#x27;0&#x27;: &#x27;a&#x27;,</span><br><span class="line">    &#x27;1&#x27;: &#x27;b&#x27;,</span><br><span class="line">    &#x27;2&#x27;: &#x27;c&#x27;,</span><br><span class="line">    length: 3</span><br><span class="line">&#125;;</span><br><span class="line">let arr2 = Array.from(arrayLike); // [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;]</span><br></pre></td></tr></table></figure>
+<p>还可以接受第二个参数，用来对每个元素进行处理，将处理后的值放入返回的数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Array.from([1, 2, 3], (x) =&gt; x * x)</span><br><span class="line">// [1, 4, 9]</span><br></pre></td></tr></table></figure>
+<p>#Array.of()<br>用于将一组值，转换为数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array.of(3, 11, 8) // [3,11,8]</span><br></pre></td></tr></table></figure>
+<p>没有参数的时候，返回一个空数组</p>
+<p>当参数只有一个的时候，实际上是指定数组的长度</p>
+<p>参数个数不少于 2 个时，Array()才会返回由参数组成的新数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Array() // []</span><br><span class="line">Array(3) // [, , ,]</span><br><span class="line">Array(3, 11, 8) // [3, 11, 8]</span><br></pre></td></tr></table></figure>
+<p>#三、实例对象新增的方法<br>关于数组实例对象新增的方法有如下：</p>
+<p>copyWithin()<br>find()、findIndex()<br>fill()<br>entries()，keys()，values()<br>includes()<br>flat()，flatMap()<br>#copyWithin()<br>将指定位置的成员复制到其他位置（会覆盖原有成员），然后返回当前数组</p>
+<p>参数如下：</p>
+<p>target（必需）：从该位置开始替换数据。如果为负值，表示倒数。<br>start（可选）：从该位置开始读取数据，默认为 0。如果为负值，表示从末尾开始计算。<br>end（可选）：到该位置前停止读取数据，默认等于数组长度。如果为负值，表示从末尾开始计算。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4, 5].copyWithin(0, 3) // 将从 3 号位直到数组结束的成员（4 和 5），复制到从 0 号位开始的位置，结果覆盖了原来的 1 和 2</span><br><span class="line">// [4, 5, 3, 4, 5] </span><br></pre></td></tr></table></figure>
+<p>#find()、findIndex()<br>find()用于找出第一个符合条件的数组成员</p>
+<p>参数是一个回调函数，接受三个参数依次为当前的值、当前的位置和原数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[1, 5, 10, 15].find(function(value, index, arr) &#123;</span><br><span class="line">  return value &gt; 9;</span><br><span class="line">&#125;) // 10</span><br></pre></td></tr></table></figure>
+<p>findIndex返回第一个符合条件的数组成员的位置，如果所有成员都不符合条件，则返回-1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[1, 5, 10, 15].findIndex(function(value, index, arr) &#123;</span><br><span class="line">  return value &gt; 9;</span><br><span class="line">&#125;) // 2</span><br></pre></td></tr></table></figure>
+<p>这两个方法都可以接受第二个参数，用来绑定回调函数的this对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function f(v)&#123;</span><br><span class="line">  return v &gt; this.age;</span><br><span class="line">&#125;</span><br><span class="line">let person = &#123;name: &#x27;John&#x27;, age: 20&#125;;</span><br><span class="line">[10, 12, 26, 15].find(f, person);    // 26</span><br></pre></td></tr></table></figure>
+<p>#fill()<br>使用给定值，填充一个数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;].fill(7)</span><br><span class="line">// [7, 7, 7]</span><br><span class="line"></span><br><span class="line">new Array(3).fill(7)</span><br><span class="line">// [7, 7, 7]</span><br></pre></td></tr></table></figure>
+<p>还可以接受第二个和第三个参数，用于指定填充的起始位置和结束位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;].fill(7, 1, 2)</span><br><span class="line">// [&#x27;a&#x27;, 7, &#x27;c&#x27;]</span><br></pre></td></tr></table></figure>
+<p>注意，如果填充的类型为对象，则是浅拷贝</p>
+<p>#entries()，keys()，values()<br>keys()是对键名的遍历、values()是对键值的遍历，entries()是对键值对的遍历</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">or (let index of [&#x27;a&#x27;, &#x27;b&#x27;].keys()) &#123;</span><br><span class="line">  console.log(index);</span><br><span class="line">&#125;</span><br><span class="line">// 0</span><br><span class="line">// 1</span><br><span class="line"></span><br><span class="line">for (let elem of [&#x27;a&#x27;, &#x27;b&#x27;].values()) &#123;</span><br><span class="line">  console.log(elem);</span><br><span class="line">&#125;</span><br><span class="line">// &#x27;a&#x27;</span><br><span class="line">// &#x27;b&#x27;</span><br><span class="line"></span><br><span class="line">for (let [index, elem] of [&#x27;a&#x27;, &#x27;b&#x27;].entries()) &#123;</span><br><span class="line">  console.log(index, elem);</span><br><span class="line">&#125;</span><br><span class="line">// 0 &quot;a&quot;</span><br></pre></td></tr></table></figure>
+<p>#includes()<br>用于判断数组是否包含给定的值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3].includes(2)     // true</span><br><span class="line">[1, 2, 3].includes(4)     // false</span><br><span class="line">[1, 2, NaN].includes(NaN) // true</span><br></pre></td></tr></table></figure>
+<p>方法的第二个参数表示搜索的起始位置，默认为0</p>
+<p>参数为负数则表示倒数的位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3].includes(3, 3);  // false</span><br><span class="line">[1, 2, 3].includes(3, -1); // true</span><br></pre></td></tr></table></figure>
+<p>#flat()，flatMap()<br>将数组扁平化处理，返回一个新数组，对原数据没有影响</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, [3, 4]].flat()</span><br><span class="line">// [1, 2, 3, 4]</span><br></pre></td></tr></table></figure>
+<p>flat()默认只会“拉平”一层，如果想要“拉平”多层的嵌套数组，可以将flat()方法的参数写成一个整数，表示想要拉平的层数，默认为1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, [3, [4, 5]]].flat()</span><br><span class="line">// [1, 2, 3, [4, 5]]</span><br><span class="line"></span><br><span class="line">[1, 2, [3, [4, 5]]].flat(2)</span><br><span class="line">// [1, 2, 3, 4, 5]</span><br></pre></td></tr></table></figure>
+<p>flatMap()方法对原数组的每个成员执行一个函数相当于执行Array.prototype.map()，然后对返回值组成的数组执行flat()方法。该方法返回一个新数组，不改变原数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 相当于 [[2, 4], [3, 6], [4, 8]].flat()</span><br><span class="line">[2, 3, 4].flatMap((x) =&gt; [x, x * 2])</span><br><span class="line">// [2, 4, 3, 6, 4, 8]</span><br></pre></td></tr></table></figure>
+<p>flatMap()方法还可以有第二个参数，用来绑定遍历函数里面的this</p>
+<p>#四、数组的空位<br>数组的空位指，数组的某一个位置没有任何值</p>
+<p>ES6 则是明确将空位转为undefined，包括Array.from、扩展运算符、copyWithin()、fill()、entries()、keys()、values()、find()和findIndex()</p>
+<p>建议大家在日常书写中，避免出现空位</p>
+<p>#五、排序稳定性<br>将sort()默认设置为稳定的排序算法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">const arr = [</span><br><span class="line">  &#x27;peach&#x27;,</span><br><span class="line">  &#x27;straw&#x27;,</span><br><span class="line">  &#x27;apple&#x27;,</span><br><span class="line">  &#x27;spork&#x27;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">const stableSorting = (s1, s2) =&gt; &#123;</span><br><span class="line">  if (s1[0] &lt; s2[0]) return -1;</span><br><span class="line">  return 1;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">arr.sort(stableSorting)</span><br><span class="line">// [&quot;apple&quot;, &quot;peach&quot;, &quot;straw&quot;, &quot;spork&quot;]</span><br></pre></td></tr></table></figure>
+<p>排序结果中，straw在spork的前面，跟原始顺序一致</p>
+
+</article>
+    
+    
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-mb-40 trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2018/06/20/diff/" class="trm-cover-frame trm-anima-link">
+            <img src="/img/block.jpg" alt="cover">
+        </a>
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/Vue/">
+                    Vue
+                </a>
+            </div>
+            <h5>
+                <a href="/2018/06/20/diff/" class="trm-anima-link">
+                    diff算法实现
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>18/06/20</li>
+                <li>09:00</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2018/06/11/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/" class="trm-cover-frame trm-anima-link">
+            <img src="/img/block.jpg" alt="cover">
+        </a>
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/JavaScript/">
+                    JavaScript
+                </a>
+            </div>
+            <h5>
+                <a href="/2018/06/11/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/" class="trm-anima-link">
+                    说说var、let、const之间的区别
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>18/06/11</li>
+                <li>07:23</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+
+                    <div class="trm-divider trm-mb-40"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation" data-scroll data-scroll-offset="50">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v5.4.2
+            </span>
+            <span class="footer-separator"> | </span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                vv1.1.8
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+ 
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+          </div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+
+  </div>
+  <!-- app wrapper end -->
+
+  <div id="trm-back-top" class="trm-back-top">
+    <i class="fas fa-arrow-up"></i>
+</div>
+  
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="//cdn.jsdelivr.net/npm/swup@2.0.19/dist/swup.min.js"></script>
+
+    
+<script src="//cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+
+    
+<script src="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=v1.1.8"></script>
+    
+
+    
+
+    
+
+
+
+<!-- 评论插件 -->
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=v1.1.8"></script>
+
+</body>
+
+</html>
