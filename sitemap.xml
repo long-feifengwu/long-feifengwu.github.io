@@ -2,7 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2018/08/19/%E4%BB%80%E4%B9%88%E6%98%AF%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81%EF%BC%9F/%E4%BB%80%E4%B9%88%E6%98%AF%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81%EF%BC%9F/</loc>
+    <loc>http://example.com/2018/08/23/Promise%E7%9A%84%EF%BC%9F/Promise%E7%9A%84%EF%BC%9F/</loc>
+    
+    <lastmod>2022-10-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/2018/08/21/%E5%8C%BA%E5%88%AB%EF%BC%9F/%E5%8C%BA%E5%88%AB%EF%BC%9F/</loc>
     
     <lastmod>2022-10-12</lastmod>
     
@@ -12,6 +21,15 @@
   
   <url>
     <loc>http://example.com/2018/08/16/%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F/%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F/</loc>
+    
+    <lastmod>2022-10-12</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/2018/08/19/%E4%BB%80%E4%B9%88%E6%98%AF%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81%EF%BC%9F/%E4%BB%80%E4%B9%88%E6%98%AF%E9%98%B2%E6%8A%96%E5%92%8C%E8%8A%82%E6%B5%81%EF%BC%9F/</loc>
     
     <lastmod>2022-10-12</lastmod>
     

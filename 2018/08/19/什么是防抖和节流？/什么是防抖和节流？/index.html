@@ -16,7 +16,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://static.vue-js.com/a2c81b50-8787-11eb-ab90-d9ae814b240d.png">
 <meta property="article:published_time" content="2018-08-19T14:37:00.000Z">
-<meta property="article:modified_time" content="2022-10-12T13:20:26.519Z">
+<meta property="article:modified_time" content="2022-10-12T13:22:43.988Z">
 <meta property="article:author" content="Hubert">
 <meta property="article:tag" content="JavaScript">
 <meta name="twitter:card" content="summary">
@@ -391,47 +391,16 @@
 <p>电梯第一个人进来后，等待15秒。如果过程中又有人进来，15秒等待重新计时，直到15秒后开始运送，这是防抖</p>
 <p>#代码实现<br>#节流<br>完成节流可以使用时间戳与定时器的写法</p>
 <p>使用时间戳写法，事件会立即执行，停止触发后没有办法再次执行</p>
-<p>function throttled1(fn, delay = 500) {<br>    let oldtime = Date.now()<br>    return function (…args) {<br>        let newtime = Date.now()<br>        if (newtime - oldtime &gt;= delay) {<br>            fn.apply(null, args)<br>            oldtime = Date.now()<br>        }<br>    }<br>}</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function throttled1(fn, delay = 500) &#123;</span><br><span class="line">    let oldtime = Date.now()</span><br><span class="line">    return function (...args) &#123;</span><br><span class="line">        let newtime = Date.now()</span><br><span class="line">        if (newtime - oldtime &gt;= delay) &#123;</span><br><span class="line">            fn.apply(null, args)</span><br><span class="line">            oldtime = Date.now()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用定时器写法，delay毫秒后第一次执行，第二次事件停止触发后依然会再一次执行</p>
-<p>function throttled2(fn, delay = 500) {<br>    let timer = null<br>    return function (…args) {<br>        if (!timer) {<br>            timer = setTimeout(() =&gt; {<br>                fn.apply(this, args)<br>                timer = null<br>            }, delay);<br>        }<br>    }<br>}<br>可以将时间戳写法的特性与定时器写法的特性相结合，实现一个更加精确的节流。实现如下</p>
-<p>function throttled(fn, delay) {<br>    let timer = null<br>    let starttime = Date.now()<br>    return function () {<br>        let curTime = Date.now() // 当前时间<br>        let remaining = delay - (curTime - starttime)  // 从上一次到现在，还剩下多少多余时间<br>        let context = this<br>        let args = arguments<br>        clearTimeout(timer)<br>        if (remaining &lt;= 0) {<br>            fn.apply(context, args)<br>            starttime = Date.now()<br>        } else {<br>            timer = setTimeout(fn, remaining);<br>        }<br>    }<br>}<br>#防抖<br>简单版本的实现</p>
-<p>function debounce(func, wait) {<br>    let timeout;</p>
-<pre><code>return function () &#123;
-    let context = this; // 保存this指向
-    let args = arguments; // 拿到event对象
-
-    clearTimeout(timeout)
-    timeout = setTimeout(function()&#123;
-        func.apply(context, args)
-    &#125;, wait);
-&#125;
-</code></pre>
-<p>}<br>防抖如果需要立即执行，可加入第三个参数用于判断，实现如下：</p>
-<p>function debounce(func, wait, immediate) {</p>
-<pre><code>let timeout;
-
-return function () &#123;
-    let context = this;
-    let args = arguments;
-
-    if (timeout) clearTimeout(timeout); // timeout 不为null
-    if (immediate) &#123;
-        let callNow = !timeout; // 第一次会立即执行，以后只有事件执行后才会再次触发
-        timeout = setTimeout(function () &#123;
-            timeout = null;
-        &#125;, wait)
-        if (callNow) &#123;
-            func.apply(context, args)
-        &#125;
-    &#125;
-    else &#123;
-        timeout = setTimeout(function () &#123;
-            func.apply(context, args)
-        &#125;, wait);
-    &#125;
-&#125;
-</code></pre>
-<p>}<br>#二、区别<br>相同点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function throttled2(fn, delay = 500) &#123;</span><br><span class="line">    let timer = null</span><br><span class="line">    return function (...args) &#123;</span><br><span class="line">        if (!timer) &#123;</span><br><span class="line">            timer = setTimeout(() =&gt; &#123;</span><br><span class="line">                fn.apply(this, args)</span><br><span class="line">                timer = null</span><br><span class="line">            &#125;, delay);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以将时间戳写法的特性与定时器写法的特性相结合，实现一个更加精确的节流。实现如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function throttled(fn, delay) &#123;</span><br><span class="line">    let timer = null</span><br><span class="line">    let starttime = Date.now()</span><br><span class="line">    return function () &#123;</span><br><span class="line">        let curTime = Date.now() // 当前时间</span><br><span class="line">        let remaining = delay - (curTime - starttime)  // 从上一次到现在，还剩下多少多余时间</span><br><span class="line">        let context = this</span><br><span class="line">        let args = arguments</span><br><span class="line">        clearTimeout(timer)</span><br><span class="line">        if (remaining &lt;= 0) &#123;</span><br><span class="line">            fn.apply(context, args)</span><br><span class="line">            starttime = Date.now()</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            timer = setTimeout(fn, remaining);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>#防抖<br>简单版本的实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function debounce(func, wait) &#123;</span><br><span class="line">    let timeout;</span><br><span class="line"></span><br><span class="line">    return function () &#123;</span><br><span class="line">        let context = this; // 保存this指向</span><br><span class="line">        let args = arguments; // 拿到event对象</span><br><span class="line"></span><br><span class="line">        clearTimeout(timeout)</span><br><span class="line">        timeout = setTimeout(function()&#123;</span><br><span class="line">            func.apply(context, args)</span><br><span class="line">        &#125;, wait);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>防抖如果需要立即执行，可加入第三个参数用于判断，实现如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">function debounce(func, wait, immediate) &#123;</span><br><span class="line"></span><br><span class="line">    let timeout;</span><br><span class="line"></span><br><span class="line">    return function () &#123;</span><br><span class="line">        let context = this;</span><br><span class="line">        let args = arguments;</span><br><span class="line"></span><br><span class="line">        if (timeout) clearTimeout(timeout); // timeout 不为null</span><br><span class="line">        if (immediate) &#123;</span><br><span class="line">            let callNow = !timeout; // 第一次会立即执行，以后只有事件执行后才会再次触发</span><br><span class="line">            timeout = setTimeout(function () &#123;</span><br><span class="line">                timeout = null;</span><br><span class="line">            &#125;, wait)</span><br><span class="line">            if (callNow) &#123;</span><br><span class="line">                func.apply(context, args)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        else &#123;</span><br><span class="line">            timeout = setTimeout(function () &#123;</span><br><span class="line">                func.apply(context, args)</span><br><span class="line">            &#125;, wait);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>#二、区别<br>相同点：</p>
 <p>都可以通过使用 setTimeout 实现<br>目的都是，降低回调执行频率。节省计算资源<br>不同点：</p>
 <p>函数防抖，在一段连续操作结束后，处理回调，利用clearTimeout和 setTimeout实现。函数节流，在一段连续操作中，每一段时间只执行一次，频率较高的事件中使用来提高性能<br>函数防抖关注一定时间连续触发的事件，只在最后执行一次，而函数节流一段时间内只执行一次<br>例如，都设置时间频率为500ms，在2秒时间内，频繁触发函数，节流，每隔 500ms 就执行一次。防抖，则不管调动多少次方法，在2s后，只会执行一次</p>
 <p>如下图所示：<br><img src="https://static.vue-js.com/a2c81b50-8787-11eb-ab90-d9ae814b240d.png" loading="lazy"><br>三、应用场景<br>防抖在连续的事件，只需触发一次回调的场景有：</p>
@@ -451,11 +420,38 @@ return function () &#123;
         </h5>
     </div>
     
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2018/08/21/%E5%8C%BA%E5%88%AB%EF%BC%9F/%E5%8C%BA%E5%88%AB%EF%BC%9F/" class="trm-cover-frame trm-anima-link">
+            <img src="/img/block.jpg" alt="cover">
+        </a>
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/JavaScript/">
+                    JavaScript
+                </a>
+            </div>
+            <h5>
+                <a href="/2018/08/21/%E5%8C%BA%E5%88%AB%EF%BC%9F/%E5%8C%BA%E5%88%AB%EF%BC%9F/" class="trm-anima-link">
+                    call、apply、bind区别？
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>18/08/21</li>
+                <li>08:43</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
     
         <div class="col-lg-6">
     <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
         <a href="/2018/08/16/%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F/%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F/" class="trm-cover-frame trm-anima-link">
-            <img src="https://img1.baidu.com/it/u=2889175573,4099281197&fm=253&fmt=auto&app=120&f=JPEG?w=640&h=427" alt="cover">
+            <img src="https://img2.baidu.com/it/u=731158372,2912775682&fm=253&fmt=auto&app=138&f=JPEG?w=909&h=500" alt="cover">
         </a>
         <div class="trm-card-descr">
             <div class="trm-label trm-category trm-mb-20">
