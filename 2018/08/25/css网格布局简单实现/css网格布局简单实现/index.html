@@ -7,21 +7,31 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta name="description" content="欢迎来到我的博客！共同学习编程语言">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hubert个人博客">
-<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta name="description" content="我将教你如何使用 CSS Grid(网格) 布局来创建一个超酷的图像网格，它会根据屏幕的宽度改变列的数量，以实现响应式布局">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css网格布局实现的响应式布局">
+<meta property="og:url" content="http://example.com/2018/08/25/css%E7%BD%91%E6%A0%BC%E5%B8%83%E5%B1%80%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/css%E7%BD%91%E6%A0%BC%E5%B8%83%E5%B1%80%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="Hubert个人博客">
-<meta property="og:description" content="欢迎来到我的博客！共同学习编程语言">
+<meta property="og:description" content="我将教你如何使用 CSS Grid(网格) 布局来创建一个超酷的图像网格，它会根据屏幕的宽度改变列的数量，以实现响应式布局">
 <meta property="og:locale">
+<meta property="og:image" content="https://www.html.cn/newimg88/2017/12/1_fJNIdDiScjhI9CZjdxv3Eg.png">
+<meta property="og:image" content="https://www.html.cn/newimg88/2017/12/1_JgGPqT2AfFNDD8DhG2wPdQ.gif">
+<meta property="og:image" content="https://www.html.cn/newimg88/2017/12/1_cpfokc1HBgCwOTNhRU9SHg.gif">
+<meta property="og:image" content="https://www.html.cn/newimg88/2017/12/1_fJNIdDiScjhI9CZjdxv3Eg.png">
+<meta property="og:image" content="https://www.html.cn/newimg88/2017/12/1_vLZ9RD3dt0Q3hCieYfRuMg.gif">
+<meta property="og:image" content="https://www.html.cn/newimg88/2017/12/1_1FOrkyNbaabo3_LJxcdDbg.gif">
+<meta property="og:image" content="https://www.html.cn/newimg88/2017/12/1_jCNANupl0ECRzF6cOLuWNw.gif">
+<meta property="article:published_time" content="2018-08-25T11:44:00.000Z">
+<meta property="article:modified_time" content="2022-10-15T03:13:45.722Z">
 <meta property="article:author" content="Hubert">
-<meta property="article:tag" content="VUE开发">
+<meta property="article:tag" content="CSS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.html.cn/newimg88/2017/12/1_fJNIdDiScjhI9CZjdxv3Eg.png">
 
-    <meta name="keywords" content="VUE开发">
+    <meta name="keywords" content="CSS,网格,grid">
 
 
-<title >Hubert个人博客</title>
+<title >css网格布局实现的响应式布局</title>
 
 <!-- Favicon -->
 
@@ -202,7 +212,8 @@
             <!-- top bar end -->
 
             <!-- body -->
-            <div class="trm-content-start">
+            
+<div class="trm-content-start">
     <!-- banner -->
     <div class="trm-banner" data-scroll data-scroll-direction="vertical">
     
@@ -223,10 +234,10 @@
                     <!-- banner title -->
                     <div class="trm-banner-text ">
                         <div class="trm-label trm-mb-20">
-                            欢迎!我的朋友！
+                            NEWS LETTER
                         </div>
                         <h1 class="trm-mb-30 trm-hsmb-font">
-                            树深时见鹿，<br>溪午不闻钟。
+                            css网格布局实现的响应式布局
                         </h1>
 
                         
@@ -236,7 +247,7 @@
                                 </li>
                                 <li>
                                     <span>
-                                        page
+                                        2018
                                     </span
                                 ></li>
                             </ul>
@@ -354,78 +365,101 @@
                 <div class="trm-content" id="trm-content">
                     <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
 
-                    <!-- categories -->
-<div class="row hidden-sm">
-    
-    <div class="col-lg-6">
-        <!-- categories card -->
-        <div class="trm-blog-categories trm-scroll-animation" data-scroll data-scroll-offset="40">
-            <h6>
-                HTML
-                <span class="trm-number">
-                    1
-                </span>
-            </h6>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <a href="/categories/HTML/." class="trm-label">
-                查看分类 
-                <i class="fas fa-arrow-right"></i>
-            </a>
+                    <div class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-calendar-alt trm-icon"></i><br>
+            08/25
         </div>
-        <!-- categories card end -->
     </div>
-    
-    <div class="col-lg-6">
-        <!-- categories card -->
-        <div class="trm-blog-categories trm-scroll-animation" data-scroll data-scroll-offset="40">
-            <h6>
-                Vue
-                <span class="trm-number">
-                    2
-                </span>
-            </h6>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <a href="/categories/Vue/." class="trm-label">
-                查看分类 
-                <i class="fas fa-arrow-right"></i>
-            </a>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-clock trm-icon"></i><br>
+            07:44
         </div>
-        <!-- categories card end -->
     </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-user trm-icon"></i><br>
+            Hubert空间
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article class="trm-publication">
+    <p>在这篇文章中，我将教你如何使用 CSS Grid(网格) 布局来创建一个超酷的图像网格，它会根据屏幕的宽度改变列的数量，以实现响应式布局。</p>
+<p>而这篇文章中最漂亮的部分是：添加一行 CSS 代码即可实现响应式布局。</p>
+<p>这意味着我们不必通过丑陋的类名（即 col-sm-4，col-md-8）来混淆 HTML ，或者为每一个屏幕尺寸创建媒体查询。</p>
+<p>现在就让让我们开始吧！<br>设置<br>对于本文，我们将继续使用 5分钟学会 CSS Grid 布局 文章中使用的网格。然后我们将在文章的最后添加图片。以下是我们的初始网格的外观：<br><img src="https://www.html.cn/newimg88/2017/12/1_fJNIdDiScjhI9CZjdxv3Eg.png" loading="lazy"><br>这是HTML：</p>
+<p>HTML 代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">  &lt;div&gt;1&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;2&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;3&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;4&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;5&lt;/div&gt;</span><br><span class="line">  &lt;div&gt;6&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>还有相应的 CSS ：</p>
+<p>CSS 代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.container &#123;</span><br><span class="line">    display: grid;</span><br><span class="line">    grid-template-columns: 100px 100px 100px;</span><br><span class="line">    grid-template-rows: 50px 50px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：这个例子也有一些基本的样式，比如容器宽度，网格间隔，背景颜色什么的，我不会在这里介绍，因为它与 CSS Grid 没有任何关系。<br>如果这段代码让你感到困惑，我建议你阅读 5分钟学会 CSS Grid 布局 这篇文章，在那里我解释了 Grid 布局模块的基础知识。</p>
+<p>让我们开始将 列 实现响应式布局。</p>
+<p>使用等分(fr)单位实现基本的响应式<br>CSS Grid 带来了一个全新的值，称为等分单位，即 fr 。它允许你将容器可用空间分成你想要的多个等分空间。</p>
+<p>让我们将每个列更改为一个等分单位宽度。</p>
+<p>CSS 代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.container &#123;</span><br><span class="line">    display: grid;</span><br><span class="line">    grid-template-columns: 1fr 1fr 1fr;</span><br><span class="line">    grid-template-rows: 50px 50px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里发生的事情是，将整个网格的宽度分成三等分，每一列都占据一个 fr 单位。结果是：<br><img src="https://www.html.cn/newimg88/2017/12/1_JgGPqT2AfFNDD8DhG2wPdQ.gif" loading="lazy"><br>如果我们将 grid-template-columns 的值更改为 1fr 2fr 1fr，那么第 2 列现在将是另外 2 列的 2 倍。总宽度现在是 4 等分，第 2 列占据了 2 等分，而其他 2 列则各占 1 等分。看起来类似这样：<br><img src="https://www.html.cn/newimg88/2017/12/1_cpfokc1HBgCwOTNhRU9SHg.gif" loading="lazy"><br>换句话说，等分单位值使你可以非常容易地改变列的宽度。</p>
+<p>更加高级的响应式<br>但是，上面的例子并没有给我们想要的响应式，因为这个网格总是包含 3 列。我们希望我们的网格根据容器的宽度来改变列的数量。要做到这一点，你必须学习三个新的概念。</p>
+<p>repeat()<br>我们将从 repeat() 函数开始。 这是指定列和行更强大的方法。 让我们把原来的网格改成使用 repeat() ：</p>
+<p>CSS 代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.container &#123;</span><br><span class="line">    display: grid;</span><br><span class="line">    grid-template-columns: repeat(3, 100px);</span><br><span class="line">    grid-template-rows: repeat(2, 50px);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>换句话说，repeat(3, 100px) 与 100px 100px 100px 相同。 第一个参数指定了你想要的列数或行数，第二个参数指定了它们的宽度，所以上面的代码将为我们创建和第一个一样的布局。<br><img src="https://www.html.cn/newimg88/2017/12/1_fJNIdDiScjhI9CZjdxv3Eg.png" loading="lazy"><br>auto-fit （自适应）<br>然后是自适应。让我们跳过固定数量的列，而是用 auto-fit 取代 3 。</p>
+<p>CSS 代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.container &#123;</span><br><span class="line">    display: grid;</span><br><span class="line">    grid-gap: 5px;</span><br><span class="line">    grid-template-columns: repeat(auto-fit, 100px);</span><br><span class="line">    grid-template-rows: repeat(2, 100px);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这会达到以下效果：<br><img src="https://www.html.cn/newimg88/2017/12/1_vLZ9RD3dt0Q3hCieYfRuMg.gif" loading="lazy"><br>你会看到，现在这个网格已经可以通过容器的宽度来改变列的数量。</p>
+<p>它只是试图尽可能多地将 100px 宽的列排列在容器中。</p>
+<p>但是，如果我们将所有列硬编码为 100px ，我们永远得不到我们想要的灵活性，因为它们很少会加起来正好等于容器的宽度。正如你在上面的 gif 图中所看到的，网格通常会在右侧留下空白区域。</p>
+<p>minmax()<br>为了解决这个问题，我们需要的最后一方法是 minmax()。我们只需用 minmax(100px, 1fr) 替换 100px 即可。这是最终的CSS。</p>
+<p>CSS 代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.container &#123;</span><br><span class="line">    display: grid;</span><br><span class="line">    grid-gap: 5px;</span><br><span class="line">    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));</span><br><span class="line">    grid-template-rows: repeat(2, 100px);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，所有的响应都发生在一行 CSS 中。</p>
+<p>这会达到以下效果：<br><img src="https://www.html.cn/newimg88/2017/12/1_1FOrkyNbaabo3_LJxcdDbg.gif" loading="lazy"><br>正如你们所见，这样很完美。minmax() 函数定义大于或等于 min 且小于或等于 max 的大小范围。</p>
+<p>所以现在列的宽度至少 100px 。但是，如果有更多的可用空间，网格将简单地分配给每个列，因为列的值变成了一个等分单位 1fr ，而不是 100px 。</p>
+<p>添加图片<br>现在最后一步是添加图片。 这与 CSS Grid 没有任何关系，但是我们还是要来看看代码。</p>
+<p>我们将在每个网格项内添加一个 img 标签。</p>
+<p>HTML 代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;&lt;img src=&quot;img/forest.jpg&quot;/&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>为了使图像适合该网格项，我们将它设置为与网格项一样宽和高，然后使用 object-fit: cover;。这将使图片覆盖整个容器，如果需要的话，浏览器会裁剪该图片。<br>CSS 代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.container &gt; div &gt; img &#123;</span><br><span class="line">    width: 100%;</span><br><span class="line">    height: 100%;</span><br><span class="line">    object-fit: cover;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://www.html.cn/newimg88/2017/12/1_jCNANupl0ECRzF6cOLuWNw.gif" loading="lazy"></p>
+
+</article>
+    
     
 </div>
-<!-- categories end -->
-
-<!-- newest publications -->
 <div class="row">
     <div class="col-lg-12">
         <!-- title -->
         <h5 class="trm-mb-40 trm-title-with-divider">
-            最近发布 
-            <span data-number="01"></span>
+            其他文章
+            <span data-number="02"></span>
         </h5>
     </div>
     
         <div class="col-lg-6">
     <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/2018/06/20/diff/" class="trm-cover-frame trm-anima-link">
-            <img src="/img/block.jpg" alt="cover">
+        <a href="/2018/10/30/BFC%E6%98%AF%E4%BB%80%E4%B9%88/BFC%E6%98%AF%E4%BB%80%E4%B9%88/" class="trm-cover-frame trm-anima-link">
+            <img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/741bb54136184eb3bcb73553b6c1d6d0~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp?" alt="cover">
         </a>
         <div class="trm-card-descr">
             <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/Vue/">
-                    Vue
+                <a href=" /categories/CSS/">
+                    CSS
                 </a>
             </div>
             <h5>
-                <a href="/2018/06/20/diff/" class="trm-anima-link">
-                    diff算法实现
+                <a href="/2018/10/30/BFC%E6%98%AF%E4%BB%80%E4%B9%88/BFC%E6%98%AF%E4%BB%80%E4%B9%88/" class="trm-anima-link">
+                    BFC是什么?
                 </a>
             </h5>
             <div class="trm-divider trm-mb-20 trm-mt-20"></div>
             <ul class="trm-card-data trm-label">
-                <li>18/06/20</li>
-                <li>09:00</li>
+                <li>18/10/30</li>
+                <li>08:31</li>
                 
                 
             </ul>
@@ -433,10 +467,11 @@
     </div>
 </div>
     
+    
         <div class="col-lg-6">
     <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/2018/06/19/ES6%E4%B8%AD%E6%95%B0%E7%BB%84%E6%96%B0%E5%A2%9E%E4%BA%86%E5%93%AA%E4%BA%9B%E6%89%A9%E5%B1%95%EF%BC%9F/ES6%E4%B8%AD%E6%95%B0%E7%BB%84%E6%96%B0%E5%A2%9E%E4%BA%86%E5%93%AA%E4%BA%9B%E6%89%A9%E5%B1%95%EF%BC%9F/" class="trm-cover-frame trm-anima-link">
-            <img src="/img/block.jpg" alt="cover">
+        <a href="/2018/08/23/Promise%E7%9A%84%EF%BC%9F/Promise%E7%9A%84%EF%BC%9F/" class="trm-cover-frame trm-anima-link">
+            <img src="https://img1.baidu.com/it/u=638339488,4273016503&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=250" alt="cover">
         </a>
         <div class="trm-card-descr">
             <div class="trm-label trm-category trm-mb-20">
@@ -445,230 +480,14 @@
                 </a>
             </div>
             <h5>
-                <a href="/2018/06/19/ES6%E4%B8%AD%E6%95%B0%E7%BB%84%E6%96%B0%E5%A2%9E%E4%BA%86%E5%93%AA%E4%BA%9B%E6%89%A9%E5%B1%95%EF%BC%9F/ES6%E4%B8%AD%E6%95%B0%E7%BB%84%E6%96%B0%E5%A2%9E%E4%BA%86%E5%93%AA%E4%BA%9B%E6%89%A9%E5%B1%95%EF%BC%9F/" class="trm-anima-link">
-                    ES6中数组新增了哪些扩展？
+                <a href="/2018/08/23/Promise%E7%9A%84%EF%BC%9F/Promise%E7%9A%84%EF%BC%9F/" class="trm-anima-link">
+                    你是怎么理解ES6中 Promise的？
                 </a>
             </h5>
             <div class="trm-divider trm-mb-20 trm-mt-20"></div>
             <ul class="trm-card-data trm-label">
-                <li>18/06/19</li>
-                <li>10:03</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/2018/06/11/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/" class="trm-cover-frame trm-anima-link">
-            <img src="/img/block.jpg" alt="cover">
-        </a>
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/JavaScript/">
-                    JavaScript
-                </a>
-            </div>
-            <h5>
-                <a href="/2018/06/11/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/%E8%AF%B4%E8%AF%B4var%E3%80%81let%E3%80%81const%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB/" class="trm-anima-link">
-                    说说var、let、const之间的区别
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>18/06/11</li>
-                <li>07:23</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/2018/05/17/vue%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%8F%8A%E4%BD%BF%E7%94%A8/vue%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%8F%8A%E4%BD%BF%E7%94%A8/" class="trm-cover-frame trm-anima-link">
-            <img src="/img/block.jpg" alt="cover">
-        </a>
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/Vue/">
-                    Vue
-                </a>
-            </div>
-            <h5>
-                <a href="/2018/05/17/vue%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%8F%8A%E4%BD%BF%E7%94%A8/vue%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6%E5%8F%8A%E4%BD%BF%E7%94%A8/" class="trm-anima-link">
-                    vue自定义插件及使用
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>18/05/17</li>
-                <li>09:14</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/2018/04/27/ajax%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/ajax%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/" class="trm-cover-frame trm-anima-link">
-            <img src="/img/block.jpg" alt="cover">
-        </a>
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/JavaScript/">
-                    JavaScript
-                </a>
-            </div>
-            <h5>
-                <a href="/2018/04/27/ajax%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/ajax%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/" class="trm-anima-link">
-                    ajax原理是什么
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>18/04/27</li>
-                <li>10:06</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/2018/04/20/%E8%AF%B4%E8%AF%B4new%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%85%B7%E4%BD%93%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/%E8%AF%B4%E8%AF%B4new%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%85%B7%E4%BD%93%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/" class="trm-cover-frame trm-anima-link">
-            <img src="/img/block.jpg" alt="cover">
-        </a>
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/JavaScript/">
-                    JavaScript
-                </a>
-            </div>
-            <h5>
-                <a href="/2018/04/20/%E8%AF%B4%E8%AF%B4new%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%85%B7%E4%BD%93%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/%E8%AF%B4%E8%AF%B4new%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%85%B7%E4%BD%93%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88/" class="trm-anima-link">
-                    说说new操作符具体干了什么
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>18/04/20</li>
-                <li>08:33</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/2018/04/16/%E8%A7%A3%E9%87%8A%E4%B8%8B%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E4%BB%B6%E4%BB%A3%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/%E8%A7%A3%E9%87%8A%E4%B8%8B%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E4%BB%B6%E4%BB%A3%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" class="trm-cover-frame trm-anima-link">
-            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.it610.com%2Fimage%2Finfo5%2Fdef1337aecc34033879423de5db8d4a5.jpg&refer=http%3A%2F%2Fimg.it610.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667644221&t=7752b9891c5cf8875b1829ef585c46d3" alt="cover">
-        </a>
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/JavaScript/">
-                    JavaScript
-                </a>
-            </div>
-            <h5>
-                <a href="/2018/04/16/%E8%A7%A3%E9%87%8A%E4%B8%8B%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E4%BB%B6%E4%BB%A3%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/%E8%A7%A3%E9%87%8A%E4%B8%8B%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E4%BB%B6%E4%BB%A3%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/" class="trm-anima-link">
-                    解释下什么是事件代理及应用场景
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>18/04/16</li>
-                <li>06:13</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/2018/04/07/%E5%8C%BA%E5%88%AB/%E5%8C%BA%E5%88%AB/" class="trm-cover-frame trm-anima-link">
-            <img src="/img/block.jpg" alt="cover">
-        </a>
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/JavaScript/">
-                    JavaScript
-                </a>
-            </div>
-            <h5>
-                <a href="/2018/04/07/%E5%8C%BA%E5%88%AB/%E5%8C%BA%E5%88%AB/" class="trm-anima-link">
-                    typeof 与 instanceof 区别
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>18/04/07</li>
-                <li>10:05</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/2018/03/22/%E8%B0%88%E8%B0%88this%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%90%86%E8%A7%A3/%E8%B0%88%E8%B0%88this%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%90%86%E8%A7%A3/" class="trm-cover-frame trm-anima-link">
-            <img src="/img/block.jpg" alt="cover">
-        </a>
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/JavaScript/">
-                    JavaScript
-                </a>
-            </div>
-            <h5>
-                <a href="/2018/03/22/%E8%B0%88%E8%B0%88this%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%90%86%E8%A7%A3/%E8%B0%88%E8%B0%88this%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%90%86%E8%A7%A3/" class="trm-anima-link">
-                    谈谈this对象的理解
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>18/03/22</li>
-                <li>08:25</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
-        <a href="/2018/03/18/Javascript%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF/Javascript%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF/" class="trm-cover-frame trm-anima-link">
-            <img src="https://static.vue-js.com/0df74700-731c-11eb-ab90-d9ae814b240d.png" alt="cover">
-        </a>
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/JavaScript/">
-                    JavaScript
-                </a>
-            </div>
-            <h5>
-                <a href="/2018/03/18/Javascript%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF/Javascript%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BB%A7%E6%89%BF/" class="trm-anima-link">
-                    Javascript如何实现继承?
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>18/03/18</li>
-                <li>10:30</li>
+                <li>18/08/23</li>
+                <li>07:26</li>
                 
                 
             </ul>
@@ -677,12 +496,6 @@
 </div>
     
 </div>
-<!-- newest publications end -->
-
-
-    <div class="trm-pagination">
-        <a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a>
-    </div>
 
 
                     <div class="trm-divider trm-mb-40"></div>
