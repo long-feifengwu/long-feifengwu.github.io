@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="SPA（single-page application），翻译过来就是单页应用SPA是一种网络应用程序或网站的模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spa应用是什么？">
+<meta property="og:url" content="http://example.com/2018/11/07/spa%E5%BA%94%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/spa%E5%BA%94%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Hubert个人博客">
+<meta property="og:description" content="SPA（single-page application），翻译过来就是单页应用SPA是一种网络应用程序或网站的模型">
+<meta property="og:locale">
+<meta property="og:image" content="https://static.vue-js.com/df14a5a0-3ac6-11eb-85f6-6fac77c0c9b3.png">
+<meta property="og:image" content="https://static.vue-js.com/eeb13aa0-3ac6-11eb-85f6-6fac77c0c9b3.png">
+<meta property="og:image" content="https://static.vue-js.com/fc95bf60-3ac6-11eb-ab90-d9ae814b240d.png">
+<meta property="og:image" content="https://static.vue-js.com/25be6630-3ac7-11eb-ab90-d9ae814b240d.png">
+<meta property="article:published_time" content="2018-11-07T11:17:00.000Z">
+<meta property="article:modified_time" content="2022-10-18T00:34:28.225Z">
+<meta property="article:author" content="Hubert">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.vue-js.com/df14a5a0-3ac6-11eb-85f6-6fac77c0c9b3.png">
+
+    <meta name="keywords" content="Vue,spa,MPA">
+
+
+<title >spa应用是什么？</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=v1.1.8' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=v1.1.8' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+
+
+    
+
+    
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Hubert","root":"/","typed_text":["Web Developer","快来看看我的博客吧！"],"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)咦！又好了！","hideText":"(●—●)喔哟，崩溃啦！"},"theme_version":"v1.1.8","theme":{"switch":true,"default":"style-light"},"search":{"enable":false,"type":"engine","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。"},"creative_commons":{"license":"by-nc-sa","language":"deed.zh","post":false,"clipboard":false}};</script>
+
+<!-- Theme mode css -->
+
+    <link data-swup-theme="style-light" rel="stylesheet" href="/css/style-light.css?v=v1.1.8" id="trm-switch-style">
+    <link data-swup-theme="style-dark" rel="stylesheet" href="/css/style-dark.css?v=v1.1.8" id="trm-switch-style">
+    <script>
+        let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+        let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+        let themeMode = catchMode === 'style-dark' ? 'style-light' : 'style-dark';
+        let linkdom = document.querySelector('[data-swup-theme='+themeMode+']');
+        if(linkdom) linkdom.remove();
+    </script>
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Hubert个人博客" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" data-scroll-container style="opacity: 0">
+          <div data-scroll-section id="content" class="trm-scroll-section">
+
+            <div class="locomotive-scroll__sticky-target" style=" position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;"></div>
+
+            <!-- top bar -->
+            <header class="trm-top-bar" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+			<a href="/" class="trm-logo-frame trm-anima-link">
+				
+					<img src="/img/favicon.svg" alt="logo">
+				
+				
+					<div class="trm-logo-text">
+						前端历程！<span></span>
+					</div>
+				
+			</a>
+			<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+
+			<!-- menu -->
+			<div class="trm-menu">
+				<nav>
+					<ul>
+						
+						<li class="menu-item-has-children ">
+							<a  href="/" target="">
+								首页
+							</a>
+							
+						</li>
+						
+						<li class="menu-item-has-children ">
+							<a  href="/archives/" target="">
+								归档
+							</a>
+							
+						</li>
+						
+					</ul>
+				</nav>
+			</div>
+			<!-- menu end -->
+			
+			<!-- mode switcher place -->
+			
+			<div class="trm-mode-switcher-place">
+				<!-- <div class="trm-hidden-switcher"> -->
+					<div class="trm-mode-switcher">
+					  <i class="far fa-sun"></i>
+					  <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+					  <label class="trm-swich" for="trm-swich"></label>
+					  <i class="far fa-moon"></i>
+					</div>
+				  <!-- </div> -->
+			</div>
+			
+			<!-- mode switcher place end -->
+
+			 
+
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner" data-scroll data-scroll-direction="vertical">
+    
+    <!-- banner cover -->
+    <img src="/img/banner.png" alt="banner" class="trm-banner-cover" data-scroll data-scroll-direction="vertical" data-scroll-speed="-3">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container" data-scroll data-scroll-direction="vertical" data-scroll-speed="0">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            spa应用是什么？
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2018
+                                    </span
+                                ></li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <a href="#about-triger" data-scroll-to="#about-triger" data-scroll-offset="-130" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </a>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card" data-scroll data-scroll-repeat data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="60"> 
+    
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20"><img class="trm-avatar" src="/img/avatar.jpg" alt="Avatar"> </div>
+    <h5 class="trm-name trm-mb-15">
+        Hubert空间
+    </h5>
+    
+    <div class="trm-label">
+        嘿！你来了！
+        <span class="trm-typed-text">
+            <!-- Words for theme.user.typedText -->
+        </span>
+    </div>
+    
+</div>
+<!-- card header end -->
+
+<!-- sidebar social -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+
+<div class="trm-social">
+    
+        <a href="https://github.com" title="Github" rel="nofollow" target="_blank">
+            <i class="fab fa-github"></i>
+        </a>
+    
+        <a href="https://twitter.com" title="Twitter" rel="nofollow" target="_blank">
+            <i class="fab fa-twitter"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+
+<!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                前端开发:
+            </div>
+            <div class="trm-label trm-label-light">
+                VUE/REACT/HTML/CSS
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                城市:
+            </div>
+            <div class="trm-label trm-label-light">
+                上海
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                年限:
+            </div>
+            <div class="trm-label trm-label-light">
+                8
+            </div>
+        </li>
+    
+</ul>
+
+<!-- info end -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<!-- action button -->
+<div class="text-center">
+    <a href="mailto:13*****@163.com" class="trm-btn">
+        联系我
+        <i class="far fa-envelope"></i>
+    </a>
+</div>
+<!-- action button end -->
+
+    
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="col-lg-8">
+                <div class="trm-content" id="trm-content">
+                    <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
+
+                    <div class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-calendar-alt trm-icon"></i><br>
+            11/07
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-clock trm-icon"></i><br>
+            07:17
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-user trm-icon"></i><br>
+            Hubert空间
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article class="trm-publication">
+    <p>一、什么是SPA<br>SPA（single-page application），翻译过来就是单页应用SPA是一种网络应用程序或网站的模型，它通过动态重写当前页面来与用户交互，这种方法避免了页面之间切换打断用户体验在单页应用中，所有必要的代码（HTML、JavaScript和CSS）都通过单个页面的加载而检索，或者根据需要（通常是为响应用户操作）动态装载适当的资源并添加到页面页面在任何时间点都不会重新加载，也不会将控制转移到其他页面举个例子来讲就是一个杯子，早上装的牛奶，中午装的是开水，晚上装的是茶，我们发现，变的始终是杯子里的内容，而杯子始终是那个杯子结构如下图<br><img src="https://static.vue-js.com/df14a5a0-3ac6-11eb-85f6-6fac77c0c9b3.png" loading="lazy"><br>我们熟知的JS框架如react,vue,angular,ember都属于SPA</p>
+<p>#二、SPA和MPA的区别<br>上面大家已经对单页面有所了解了，下面来讲讲多页应用MPA（MultiPage-page application），翻译过来就是多页应用在MPA中，每个页面都是一个主页面，都是独立的当我们在访问另一个页面的时候，都需要重新加载html、css、js文件，公共文件则根据需求按需加载如下图<br><img src="https://static.vue-js.com/eeb13aa0-3ac6-11eb-85f6-6fac77c0c9b3.png" loading="lazy"><br>单页应用与多页应用的区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">	单页面应用（SPA）	多页面应用（MPA）</span><br><span class="line">组成	一个主页面和多个页面片段	多个主页面</span><br><span class="line">刷新方式	局部刷新	整页刷新</span><br><span class="line">url模式	哈希模式	历史模式</span><br><span class="line">SEO搜索引擎优化	难实现，可使用SSR方式改善	容易实现</span><br><span class="line">数据传递	容易	通过url、cookie、localStorage等传递</span><br><span class="line">页面切换	速度快，用户体验良好	切换加载资源，速度慢，用户体验差</span><br><span class="line">维护成本	相对容易	相对复杂</span><br></pre></td></tr></table></figure>
+
+<p>单页应用优缺点<br>优点：</p>
+<p>具有桌面应用的即时性、网站的可移植性和可访问性<br>用户体验好、快，内容的改变不需要重新加载整个页面<br>良好的前后端分离，分工更明确<br>缺点：</p>
+<p>不利于搜索引擎的抓取<br>首次渲染速度相对较慢<br>#三、实现一个SPA<br>#原理<br>监听地址栏中hash变化驱动界面变化<br>用pushsate记录浏览器的历史，驱动界面发送变化<br><img src="https://static.vue-js.com/fc95bf60-3ac6-11eb-ab90-d9ae814b240d.png" loading="lazy"></p>
+<p>实现<br>#hash 模式<br>核心通过监听url中的hash来进行路由跳转</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// 定义 Router  </span><br><span class="line">class Router &#123;  </span><br><span class="line">    constructor () &#123;  </span><br><span class="line">        this.routes = &#123;&#125;; // 存放路由path及callback  </span><br><span class="line">        this.currentUrl = &#x27;&#x27;;  </span><br><span class="line">          </span><br><span class="line">        // 监听路由change调用相对应的路由回调  </span><br><span class="line">        window.addEventListener(&#x27;load&#x27;, this.refresh, false);  </span><br><span class="line">        window.addEventListener(&#x27;hashchange&#x27;, this.refresh, false);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    route(path, callback)&#123;  </span><br><span class="line">        this.routes[path] = callback;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    push(path) &#123;  </span><br><span class="line">        this.routes[path] &amp;&amp; this.routes[path]()  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">// 使用 router  </span><br><span class="line">window.miniRouter = new Router();  </span><br><span class="line">miniRouter.route(&#x27;/&#x27;, () =&gt; console.log(&#x27;page1&#x27;))  </span><br><span class="line">miniRouter.route(&#x27;/page2&#x27;, () =&gt; console.log(&#x27;page2&#x27;))  </span><br><span class="line">  </span><br><span class="line">miniRouter.push(&#x27;/&#x27;) // page1  </span><br><span class="line">miniRouter.push(&#x27;/page2&#x27;) // page2  </span><br></pre></td></tr></table></figure>
+
+<p>history模式<br>history 模式核心借用 HTML5 history api，api 提供了丰富的 router 相关属性先了解一个几个相关的api</p>
+<p>history.pushState 浏览器历史纪录添加记录<br>history.replaceState修改浏览器历史纪录中当前纪录<br>history.popState 当 history 发生变化时触发</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">// 定义 Router  </span><br><span class="line">class Router &#123;  </span><br><span class="line">    constructor () &#123;  </span><br><span class="line">        this.routes = &#123;&#125;;  </span><br><span class="line">        this.listerPopState()  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    init(path) &#123;  </span><br><span class="line">        history.replaceState(&#123;path: path&#125;, null, path);  </span><br><span class="line">        this.routes[path] &amp;&amp; this.routes[path]();  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    route(path, callback)&#123;  </span><br><span class="line">        this.routes[path] = callback;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    push(path) &#123;  </span><br><span class="line">        history.pushState(&#123;path: path&#125;, null, path);  </span><br><span class="line">        this.routes[path] &amp;&amp; this.routes[path]();  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    listerPopState () &#123;  </span><br><span class="line">        window.addEventListener(&#x27;popstate&#x27; , e =&gt; &#123;  </span><br><span class="line">            const path = e.state &amp;&amp; e.state.path;  </span><br><span class="line">            this.routers[path] &amp;&amp; this.routers[path]()  </span><br><span class="line">        &#125;)  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">// 使用 Router  </span><br><span class="line">  </span><br><span class="line">window.miniRouter = new Router();  </span><br><span class="line">miniRouter.route(&#x27;/&#x27;, ()=&gt; console.log(&#x27;page1&#x27;))  </span><br><span class="line">miniRouter.route(&#x27;/page2&#x27;, ()=&gt; console.log(&#x27;page2&#x27;))  </span><br><span class="line">  </span><br><span class="line">// 跳转  </span><br><span class="line">miniRouter.push(&#x27;/page2&#x27;)  // page2  </span><br></pre></td></tr></table></figure>
+
+<p>四、题外话：如何给SPA做SEO<br>下面给出基于Vue的SPA如何实现SEO的三种方式</p>
+<p>SSR服务端渲染<br>将组件或页面通过服务器生成html，再返回给浏览器，如nuxt.js</p>
+<p>静态化<br>目前主流的静态化主要有两种：（1）一种是通过程序将动态页面抓取并保存为静态页面，这样的页面的实际存在于服务器的硬盘中（2）另外一种是通过WEB服务器的 URL Rewrite的方式，它的原理是通过web服务器内部模块按一定规则将外部的URL请求转化为内部的文件地址，一句话来说就是把外部请求的静态地址转化为实际的动态页面地址，而静态页面实际是不存在的。这两种方法都达到了实现URL静态化的效果</p>
+<p>使用Phantomjs针对爬虫处理<br>原理是通过Nginx配置，判断访问来源是否为爬虫，如果是则搜索引擎的爬虫请求会转发到一个node server，再通过PhantomJS来解析完整的HTML，返回给爬虫。下面是大致流程图</p>
+<p><img src="https://static.vue-js.com/25be6630-3ac7-11eb-ab90-d9ae814b240d.png" loading="lazy"></p>
+
+</article>
+    
+    
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-mb-40 trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2018/11/08/v-show%E4%B8%8Ev-if%E7%9A%84%E5%8C%BA%E5%88%AB/v-show%E4%B8%8Ev-if%E7%9A%84%E5%8C%BA%E5%88%AB/" class="trm-cover-frame trm-anima-link">
+            <img src="/img/block.jpg" alt="cover">
+        </a>
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/Vue/">
+                    Vue
+                </a>
+            </div>
+            <h5>
+                <a href="/2018/11/08/v-show%E4%B8%8Ev-if%E7%9A%84%E5%8C%BA%E5%88%AB/v-show%E4%B8%8Ev-if%E7%9A%84%E5%8C%BA%E5%88%AB/" class="trm-anima-link">
+                    v-show与v-if的区别
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>18/11/08</li>
+                <li>07:55</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2018/11/03/%E5%8D%81%E4%B8%AA%E5%89%8D%E7%AB%AF%E6%89%8B%E5%86%99%E5%8A%9F%E8%83%BD/%E5%8D%81%E4%B8%AA%E5%89%8D%E7%AB%AF%E6%89%8B%E5%86%99%E5%8A%9F%E8%83%BD/" class="trm-cover-frame trm-anima-link">
+            <img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/09f15a0b30fa40a087bed3eb9655e6e8~tplv-k3u1fbpfcp-zoom-crop-mark:3024:3024:3024:1702.awebp?" alt="cover">
+        </a>
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/JavaScript/">
+                    JavaScript
+                </a>
+            </div>
+            <h5>
+                <a href="/2018/11/03/%E5%8D%81%E4%B8%AA%E5%89%8D%E7%AB%AF%E6%89%8B%E5%86%99%E5%8A%9F%E8%83%BD/%E5%8D%81%E4%B8%AA%E5%89%8D%E7%AB%AF%E6%89%8B%E5%86%99%E5%8A%9F%E8%83%BD/" class="trm-anima-link">
+                    十个前端手写功能
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>18/11/03</li>
+                <li>10:14</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+
+                    <div class="trm-divider trm-mb-40"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation" data-scroll data-scroll-offset="50">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v5.4.2
+            </span>
+            <span class="footer-separator"> | </span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                vv1.1.8
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+ 
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+          </div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+
+  </div>
+  <!-- app wrapper end -->
+
+  <div id="trm-back-top" class="trm-back-top">
+    <i class="fas fa-arrow-up"></i>
+</div>
+  
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="//cdn.jsdelivr.net/npm/swup@2.0.19/dist/swup.min.js"></script>
+
+    
+<script src="//cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+
+    
+<script src="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=v1.1.8"></script>
+    
+
+    
+
+    
+
+
+
+<!-- 评论插件 -->
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=v1.1.8"></script>
+
+</body>
+
+</html>

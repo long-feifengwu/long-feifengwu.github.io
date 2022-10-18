@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="今天给大家带来的是10个常见的 JavaScript 手写功能，重要的地方已添加注释">
+<meta property="og:type" content="article">
+<meta property="og:title" content="十个前端手写功能">
+<meta property="og:url" content="http://example.com/2018/11/03/%E5%8D%81%E4%B8%AA%E5%89%8D%E7%AB%AF%E6%89%8B%E5%86%99%E5%8A%9F%E8%83%BD/%E5%8D%81%E4%B8%AA%E5%89%8D%E7%AB%AF%E6%89%8B%E5%86%99%E5%8A%9F%E8%83%BD/index.html">
+<meta property="og:site_name" content="Hubert个人博客">
+<meta property="og:description" content="今天给大家带来的是10个常见的 JavaScript 手写功能，重要的地方已添加注释">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-11-03T14:14:00.000Z">
+<meta property="article:modified_time" content="2022-10-18T00:21:41.373Z">
+<meta property="article:author" content="Hubert">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="JavaScript,防抖,节流,深拷贝,Promise">
+
+
+<title >十个前端手写功能</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=v1.1.8' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=v1.1.8' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+
+
+    
+
+    
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Hubert","root":"/","typed_text":["Web Developer","快来看看我的博客吧！"],"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","appleTouchIcon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","showText":"(/≧▽≦/)咦！又好了！","hideText":"(●—●)喔哟，崩溃啦！"},"theme_version":"v1.1.8","theme":{"switch":true,"default":"style-light"},"search":{"enable":false,"type":"engine","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。"},"creative_commons":{"license":"by-nc-sa","language":"deed.zh","post":false,"clipboard":false}};</script>
+
+<!-- Theme mode css -->
+
+    <link data-swup-theme="style-light" rel="stylesheet" href="/css/style-light.css?v=v1.1.8" id="trm-switch-style">
+    <link data-swup-theme="style-dark" rel="stylesheet" href="/css/style-dark.css?v=v1.1.8" id="trm-switch-style">
+    <script>
+        let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+        let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+        let themeMode = catchMode === 'style-dark' ? 'style-light' : 'style-dark';
+        let linkdom = document.querySelector('[data-swup-theme='+themeMode+']');
+        if(linkdom) linkdom.remove();
+    </script>
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="Hubert个人博客" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" data-scroll-container style="opacity: 0">
+          <div data-scroll-section id="content" class="trm-scroll-section">
+
+            <div class="locomotive-scroll__sticky-target" style=" position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none;"></div>
+
+            <!-- top bar -->
+            <header class="trm-top-bar" data-scroll data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="-10">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+			<a href="/" class="trm-logo-frame trm-anima-link">
+				
+					<img src="/img/favicon.svg" alt="logo">
+				
+				
+					<div class="trm-logo-text">
+						前端历程！<span></span>
+					</div>
+				
+			</a>
+			<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+
+			<!-- menu -->
+			<div class="trm-menu">
+				<nav>
+					<ul>
+						
+						<li class="menu-item-has-children ">
+							<a  href="/" target="">
+								首页
+							</a>
+							
+						</li>
+						
+						<li class="menu-item-has-children ">
+							<a  href="/archives/" target="">
+								归档
+							</a>
+							
+						</li>
+						
+					</ul>
+				</nav>
+			</div>
+			<!-- menu end -->
+			
+			<!-- mode switcher place -->
+			
+			<div class="trm-mode-switcher-place">
+				<!-- <div class="trm-hidden-switcher"> -->
+					<div class="trm-mode-switcher">
+					  <i class="far fa-sun"></i>
+					  <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+					  <label class="trm-swich" for="trm-swich"></label>
+					  <i class="far fa-moon"></i>
+					</div>
+				  <!-- </div> -->
+			</div>
+			
+			<!-- mode switcher place end -->
+
+			 
+
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner" data-scroll data-scroll-direction="vertical">
+    
+    <!-- banner cover -->
+    <img src="/img/banner.png" alt="banner" class="trm-banner-cover" data-scroll data-scroll-direction="vertical" data-scroll-speed="-3">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container" data-scroll data-scroll-direction="vertical" data-scroll-speed="0">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            十个前端手写功能
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2018
+                                    </span
+                                ></li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <a href="#about-triger" data-scroll-to="#about-triger" data-scroll-offset="-130" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </a>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card" data-scroll data-scroll-repeat data-scroll-sticky data-scroll-target=".locomotive-scroll__sticky-target" data-scroll-offset="60"> 
+    
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20"><img class="trm-avatar" src="/img/avatar.jpg" alt="Avatar"> </div>
+    <h5 class="trm-name trm-mb-15">
+        Hubert空间
+    </h5>
+    
+    <div class="trm-label">
+        嘿！你来了！
+        <span class="trm-typed-text">
+            <!-- Words for theme.user.typedText -->
+        </span>
+    </div>
+    
+</div>
+<!-- card header end -->
+
+<!-- sidebar social -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+
+<div class="trm-social">
+    
+        <a href="https://github.com" title="Github" rel="nofollow" target="_blank">
+            <i class="fab fa-github"></i>
+        </a>
+    
+        <a href="https://twitter.com" title="Twitter" rel="nofollow" target="_blank">
+            <i class="fab fa-twitter"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+
+<!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                前端开发:
+            </div>
+            <div class="trm-label trm-label-light">
+                VUE/REACT/HTML/CSS
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                城市:
+            </div>
+            <div class="trm-label trm-label-light">
+                上海
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                年限:
+            </div>
+            <div class="trm-label trm-label-light">
+                8
+            </div>
+        </li>
+    
+</ul>
+
+<!-- info end -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<!-- action button -->
+<div class="text-center">
+    <a href="mailto:13*****@163.com" class="trm-btn">
+        联系我
+        <i class="far fa-envelope"></i>
+    </a>
+</div>
+<!-- action button end -->
+
+    
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="col-lg-8">
+                <div class="trm-content" id="trm-content">
+                    <div data-scroll data-scroll-repeat data-scroll-offset="500" id="about-triger"></div>
+
+                    <div class="row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-calendar-alt trm-icon"></i><br>
+            11/03
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-clock trm-icon"></i><br>
+            10:14
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="far fa-user trm-icon"></i><br>
+            Hubert空间
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article class="trm-publication">
+    <p>一、防抖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function debounce(fn, delay) &#123;</span><br><span class="line">  let timer</span><br><span class="line">  return function (...args) &#123;</span><br><span class="line">    if (timer) &#123;</span><br><span class="line">      clearTimeout(timer)</span><br><span class="line">    &#125;</span><br><span class="line">    timer = setTimeout(() =&gt; &#123;</span><br><span class="line">      fn.apply(this, args)</span><br><span class="line">    &#125;, delay)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 测试</span><br><span class="line">function task() &#123;</span><br><span class="line">  console.log(&#x27;run task&#x27;)</span><br><span class="line">&#125;</span><br><span class="line">const debounceTask = debounce(task, 1000)</span><br><span class="line">window.addEventListener(&#x27;scroll&#x27;, debounceTask)</span><br></pre></td></tr></table></figure>
+
+<p>二、节流</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function throttle(fn, delay) &#123;</span><br><span class="line">  let last = 0 // 上次触发时间</span><br><span class="line">  return function (...args) &#123;</span><br><span class="line">    const now = Date.now()</span><br><span class="line">    if (now - last &gt; delay) &#123;</span><br><span class="line">      last = now</span><br><span class="line">      fn.apply(this, args)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 测试</span><br><span class="line">function task() &#123;</span><br><span class="line">  console.log(&#x27;run task&#x27;)</span><br><span class="line">&#125;</span><br><span class="line">const throttleTask = throttle(task, 1000)</span><br><span class="line">window.addEventListener(&#x27;scroll&#x27;, throttleTask)</span><br></pre></td></tr></table></figure>
+
+<p>三、深拷贝<br>JSON 方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 不支持值为undefined、函数和循环引用的情况</span><br><span class="line">const cloneObj = JSON.parse(JSON.stringify(obj))</span><br></pre></td></tr></table></figure>
+
+<p>递归拷贝</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function deepClone(obj, cache = new WeakMap()) &#123;</span><br><span class="line">  if (obj === null || typeof obj !== &#x27;object&#x27;) return obj</span><br><span class="line">  if (obj instanceof Date) return new Date(obj)</span><br><span class="line">  if (obj instanceof RegExp) return new RegExp(obj)</span><br><span class="line">  </span><br><span class="line">  if (cache.has(obj)) return cache.get(obj) // 如果出现循环引用，则返回缓存的对象，防止递归进入死循环</span><br><span class="line">  let cloneObj = new obj.constructor() // 使用对象所属的构造函数创建一个新对象</span><br><span class="line">  cache.set(obj, cloneObj) // 缓存对象，用于循环引用的情况</span><br><span class="line"></span><br><span class="line">  for (let key in obj) &#123;</span><br><span class="line">    if (obj.hasOwnProperty(key)) &#123;</span><br><span class="line">      cloneObj[key] = deepClone(obj[key], cache) // 递归拷贝</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return cloneObj</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 测试</span><br><span class="line">const obj = &#123; name: &#x27;Jack&#x27;, address: &#123; x: 100, y: 200 &#125; &#125;</span><br><span class="line">obj.a = obj // 循环引用</span><br><span class="line">const newObj = deepClone(obj)</span><br><span class="line">console.log(newObj.address === obj.address) // false</span><br></pre></td></tr></table></figure>
+
+<p>四、手写promise</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">class MyPromise &#123;</span><br><span class="line">  constructor(executor) &#123;</span><br><span class="line">    this.status = &#x27;pending&#x27; // 初始状态为等待</span><br><span class="line">    this.value = null // 成功的值</span><br><span class="line">    this.reason = null // 失败的原因</span><br><span class="line">    this.onFulfilledCallbacks = [] // 成功的回调函数数组</span><br><span class="line">    this.onRejectedCallbacks = [] // 失败的回调函数数组</span><br><span class="line">    let resolve = value =&gt; &#123;</span><br><span class="line">      if (this.status === &#x27;pending&#x27;) &#123;</span><br><span class="line">        this.status = &#x27;fulfilled&#x27;</span><br><span class="line">        this.value = value;</span><br><span class="line">        this.onFulfilledCallbacks.forEach(fn =&gt; fn()) // 调用成功的回调函数</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    let reject = reason =&gt; &#123;</span><br><span class="line">      if (this.status === &#x27;pending&#x27;) &#123;</span><br><span class="line">        this.status = &#x27;rejected&#x27;</span><br><span class="line">        this.reason = reason</span><br><span class="line">        this.onRejectedCallbacks.forEach(fn =&gt; fn()) // 调用失败的回调函数</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    try &#123;</span><br><span class="line">      executor(resolve, reject)</span><br><span class="line">    &#125; catch (err) &#123;</span><br><span class="line">      reject(err)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  then(onFulfilled, onRejected) &#123;</span><br><span class="line">    return new MyPromise((resolve, reject) =&gt; &#123;</span><br><span class="line">      if (this.status === &#x27;fulfilled&#x27;) &#123;</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">          const x = onFulfilled(this.value);</span><br><span class="line">          x instanceof MyPromise ? x.then(resolve, reject) : resolve(x)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">      if (this.status === &#x27;rejected&#x27;) &#123;</span><br><span class="line">        setTimeout(() =&gt; &#123;</span><br><span class="line">          const x = onRejected(this.reason)</span><br><span class="line">          x instanceof MyPromise ? x.then(resolve, reject) : resolve(x)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">      if (this.status === &#x27;pending&#x27;) &#123;</span><br><span class="line">        this.onFulfilledCallbacks.push(() =&gt; &#123; // 将成功的回调函数放入成功数组</span><br><span class="line">          setTimeout(() =&gt; &#123;</span><br><span class="line">            const x = onFulfilled(this.value)</span><br><span class="line">            x instanceof MyPromise ? x.then(resolve, reject) : resolve(x)</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">        this.onRejectedCallbacks.push(() =&gt; &#123; // 将失败的回调函数放入失败数组</span><br><span class="line">          setTimeout(() =&gt; &#123;</span><br><span class="line">            const x = onRejected(this.reason)</span><br><span class="line">            x instanceof MyPromise ? x.then(resolve, reject) : resolve(x)</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 测试</span><br><span class="line">function p1() &#123;</span><br><span class="line">  return new MyPromise((resolve, reject) =&gt; &#123;</span><br><span class="line">    setTimeout(resolve, 1000, 1)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">function p2() &#123;</span><br><span class="line">  return new MyPromise((resolve, reject) =&gt; &#123;</span><br><span class="line">    setTimeout(resolve, 1000, 2)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">p1().then(res =&gt; &#123;</span><br><span class="line">  console.log(res) // 1</span><br><span class="line">  return p2()</span><br><span class="line">&#125;).then(ret =&gt; &#123;</span><br><span class="line">  console.log(ret) // 2</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>五、异步控制并发数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">function limitRequest(urls = [], limit = 3) &#123;</span><br><span class="line">  return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    const len = urls.length</span><br><span class="line">    let count = 0</span><br><span class="line"></span><br><span class="line">    // 同时启动limit个任务</span><br><span class="line">    while (limit &gt; 0) &#123;</span><br><span class="line">      start()</span><br><span class="line">      limit -= 1</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function start() &#123;</span><br><span class="line">      const url = urls.shift() // 从数组中拿取第一个任务</span><br><span class="line">      if (url) &#123;</span><br><span class="line">        axios.post(url).then(res =&gt; &#123;</span><br><span class="line">          // todo</span><br><span class="line">        &#125;).catch(err =&gt; &#123;</span><br><span class="line">          // todo</span><br><span class="line">        &#125;).finally(() =&gt; &#123;</span><br><span class="line">          if (count == len - 1) &#123;</span><br><span class="line">            // 最后一个任务完成</span><br><span class="line">            resolve()</span><br><span class="line">          &#125; else &#123;</span><br><span class="line">            // 完成之后，启动下一个任务</span><br><span class="line">            count++</span><br><span class="line">            start()</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 测试</span><br><span class="line">limitRequest([&#x27;http://xxa&#x27;, &#x27;http://xxb&#x27;, &#x27;http://xxc&#x27;, &#x27;http://xxd&#x27;, &#x27;http://xxe&#x27;])</span><br></pre></td></tr></table></figure>
+
+<p>六、继承<br>ES5继承（寄生组合继承）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">function Parent(name) &#123;</span><br><span class="line">  this.name = name</span><br><span class="line">&#125;</span><br><span class="line">Parent.prototype.eat = function () &#123;</span><br><span class="line">  console.log(this.name + &#x27; is eating&#x27;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function Child(name, age) &#123;</span><br><span class="line">  Parent.call(this, name)</span><br><span class="line">  this.age = age</span><br><span class="line">&#125;</span><br><span class="line">Child.prototype = Object.create(Parent.prototype)</span><br><span class="line">Child.prototype.constructor = Child</span><br><span class="line"></span><br><span class="line">// 测试</span><br><span class="line">let xm = new Child(&#x27;xiaoming&#x27;, 12) </span><br><span class="line">console.log(xm.name) // xiaoming</span><br><span class="line">console.log(xm.age) // 12</span><br><span class="line">xm.eat() // xiaoming is eating</span><br></pre></td></tr></table></figure>
+
+<p>ES6 继承</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Parent &#123;</span><br><span class="line">  constructor(name) &#123;</span><br><span class="line">    this.name = name</span><br><span class="line">  &#125;</span><br><span class="line">  eat() &#123;</span><br><span class="line">    console.log(this.name + &#x27; is eating&#x27;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Child extends Parent &#123;</span><br><span class="line">  constructor(name, age) &#123;</span><br><span class="line">    super(name)</span><br><span class="line">    this.age = age</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 测试</span><br><span class="line">let xm = new Child(&#x27;xiaoming&#x27;, 12) </span><br><span class="line">console.log(xm.name) // xiaoming</span><br><span class="line">console.log(xm.age) // 12</span><br><span class="line">xm.eat() // xiaoming is eating</span><br></pre></td></tr></table></figure>
+
+<p>七、数组排序<br>sort排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 对数字进行排序，简写</span><br><span class="line">const arr = [3, 2, 4, 1, 5]</span><br><span class="line">arr.sort((a, b) =&gt; a - b)</span><br><span class="line">console.log(arr) // [1, 2, 3, 4, 5]</span><br><span class="line"></span><br><span class="line">// 对字母进行排序，简写</span><br><span class="line">const arr = [&#x27;b&#x27;, &#x27;c&#x27;, &#x27;a&#x27;, &#x27;e&#x27;, &#x27;d&#x27;]</span><br><span class="line">arr.sort()</span><br><span class="line">console.log(arr) // [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;, &#x27;e&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>冒泡排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function bubbleSort(arr) &#123;</span><br><span class="line">  let len = arr.length</span><br><span class="line">  for (let i = 0; i &lt; len - 1; i++) &#123;</span><br><span class="line">    // 从第一个元素开始，比较相邻的两个元素，前者大就交换位置</span><br><span class="line">    for (let j = 0; j &lt; len - 1 - i; j++) &#123;</span><br><span class="line">      if (arr[j] &gt; arr[j + 1]) &#123;</span><br><span class="line">        let num = arr[j]</span><br><span class="line">        arr[j] = arr[j + 1]</span><br><span class="line">        arr[j + 1] = num</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // 每次遍历结束，都能找到一个最大值，放在数组最后</span><br><span class="line">  &#125;</span><br><span class="line">  return arr</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//测试</span><br><span class="line">console.log(bubbleSort([2, 3, 1, 5, 4])) // [1, 2, 3, 4, 5]</span><br></pre></td></tr></table></figure>
+
+<p>八、数组去重<br>set去重</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const newArr = [...new Set(arr)]</span><br><span class="line">// 或</span><br><span class="line">const newArr = Array.from(new Set(arr))</span><br></pre></td></tr></table></figure>
+
+<p>indexOf 去重</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const newArr = arr.filter((item, index) =&gt; arr.indexOf(item) === index)</span><br></pre></td></tr></table></figure>
+
+<p>九、获取url参数<br>URLSearchParams 方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 创建一个URLSearchParams实例</span><br><span class="line">const urlSearchParams = new URLSearchParams(window.location.search);</span><br><span class="line">// 把键值对列表转换为一个对象</span><br><span class="line">const params = Object.fromEntries(urlSearchParams.entries());</span><br></pre></td></tr></table></figure>
+
+<p>split 方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function getParams(url) &#123;</span><br><span class="line">  const res = &#123;&#125;</span><br><span class="line">  if (url.includes(&#x27;?&#x27;)) &#123;</span><br><span class="line">    const str = url.split(&#x27;?&#x27;)[1]</span><br><span class="line">    const arr = str.split(&#x27;&amp;&#x27;)</span><br><span class="line">    arr.forEach(item =&gt; &#123;</span><br><span class="line">      const key = item.split(&#x27;=&#x27;)[0]</span><br><span class="line">      const val = item.split(&#x27;=&#x27;)[1]</span><br><span class="line">      res[key] = decodeURIComponent(val) // 解码</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  return res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 测试</span><br><span class="line">const user = getParams(&#x27;http://www.baidu.com?user=%E9%98%BF%E9%A3%9E&amp;age=16&#x27;)</span><br><span class="line">console.log(user) // &#123; user: &#x27;阿飞&#x27;, age: &#x27;16&#x27; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>十、发布订阅模式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">class EventEmitter &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.cache = &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  on(name, fn) &#123;</span><br><span class="line">    if (this.cache[name]) &#123;</span><br><span class="line">      this.cache[name].push(fn)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      this.cache[name] = [fn]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  off(name, fn) &#123;</span><br><span class="line">    const tasks = this.cache[name]</span><br><span class="line">    if (tasks) &#123;</span><br><span class="line">      const index = tasks.findIndex((f) =&gt; f === fn || f.callback === fn)</span><br><span class="line">      if (index &gt;= 0) &#123;</span><br><span class="line">        tasks.splice(index, 1)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  emit(name, once = false) &#123;</span><br><span class="line">    if (this.cache[name]) &#123;</span><br><span class="line">      // 创建副本，如果回调函数内继续注册相同事件，会造成死循环</span><br><span class="line">      const tasks = this.cache[name].slice()</span><br><span class="line">      for (let fn of tasks) &#123;</span><br><span class="line">        fn();</span><br><span class="line">      &#125;</span><br><span class="line">      if (once) &#123;</span><br><span class="line">        delete this.cache[name]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 测试</span><br><span class="line">const eventBus = new EventEmitter()</span><br><span class="line">const task1 = () =&gt; &#123; console.log(&#x27;task1&#x27;); &#125;</span><br><span class="line">const task2 = () =&gt; &#123; console.log(&#x27;task2&#x27;); &#125;</span><br><span class="line"></span><br><span class="line">eventBus.on(&#x27;task&#x27;, task1)</span><br><span class="line">eventBus.on(&#x27;task&#x27;, task2)</span><br><span class="line">eventBus.off(&#x27;task&#x27;, task1)</span><br><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">  eventBus.emit(&#x27;task&#x27;) // task2</span><br><span class="line">&#125;, 1000)</span><br></pre></td></tr></table></figure>
+</article>
+    
+    
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-mb-40 trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2018/11/07/spa%E5%BA%94%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/spa%E5%BA%94%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" class="trm-cover-frame trm-anima-link">
+            <img src="/img/block.jpg" alt="cover">
+        </a>
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/Vue/">
+                    Vue
+                </a>
+            </div>
+            <h5>
+                <a href="/2018/11/07/spa%E5%BA%94%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/spa%E5%BA%94%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/" class="trm-anima-link">
+                    spa应用是什么？
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>18/11/07</li>
+                <li>07:17</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation" data-scroll data-scroll-offset="40">
+        <a href="/2018/11/03/%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9vue%E7%9A%84%E7%90%86%E8%A7%A3/%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9vue%E7%9A%84%E7%90%86%E8%A7%A3/" class="trm-cover-frame trm-anima-link">
+            <img src="/img/block.jpg" alt="cover">
+        </a>
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/Vue/">
+                    Vue
+                </a>
+            </div>
+            <h5>
+                <a href="/2018/11/03/%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9vue%E7%9A%84%E7%90%86%E8%A7%A3/%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9vue%E7%9A%84%E7%90%86%E8%A7%A3/" class="trm-anima-link">
+                    说说你对vue的理解
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>18/11/03</li>
+                <li>10:14</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+
+                    <div class="trm-divider trm-mb-40"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation" data-scroll data-scroll-offset="50">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v5.4.2
+            </span>
+            <span class="footer-separator"> | </span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                vv1.1.8
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+ 
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+          </div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+
+  </div>
+  <!-- app wrapper end -->
+
+  <div id="trm-back-top" class="trm-back-top">
+    <i class="fas fa-arrow-up"></i>
+</div>
+  
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="//cdn.jsdelivr.net/npm/swup@2.0.19/dist/swup.min.js"></script>
+
+    
+<script src="//cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+
+    
+<script src="//cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=v1.1.8"></script>
+    
+
+    
+
+    
+
+
+
+<!-- 评论插件 -->
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=v1.1.8"></script>
+
+</body>
+
+</html>
